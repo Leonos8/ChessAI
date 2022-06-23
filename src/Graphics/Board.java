@@ -68,7 +68,7 @@ public class Board implements MouseListener
 						}
 						else
 						{
-							g.setColor(Color.black);
+							g.setColor(new Color(187, 142, 81));
 						}
 						g.fillRect(x, y, tileX, tileY);
 						
@@ -263,6 +263,12 @@ public class Board implements MouseListener
 				{
 					//System.out.println(tiles[col][row].getPiece().move());
 					//legalMove();
+					/*
+					 * boolean isValidMove to determine if the move is valid
+					 * then send it through a method to move that piece if the move is valid
+					 * isValidMove is a method on every piece
+					 * going to need location input and color input since pawn can only move in one dir
+					 */
 					selectedTile[0]=-1;
 					selectedTile[1]=-1;
 				}
