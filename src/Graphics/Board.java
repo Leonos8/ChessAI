@@ -3,6 +3,7 @@ package Graphics;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -87,6 +88,8 @@ public class Board implements MouseListener
 					y+=tileY;
 				}
 				
+				drawPieces(g);
+				
 				if(selectedTile[0]!=-1 && selectedTile[1]!=-1)
 				{
 					highlightTile(g);
@@ -104,6 +107,21 @@ public class Board implements MouseListener
 		createLabels();
 	}
 	
+	public void drawPieces(Graphics g)
+	{
+		Graphics2D g2d=(Graphics2D) g;
+		
+		for(int c=0; c<8; c++)
+		{
+			for(int r=0; r<8; r++)
+			{
+				//System.out.println(tiles[c][r].getPieceString());
+				g2d.drawImage(tiles[r][c].getPiece().getPieceImage(), startingX-20+(r*80), 
+						startingY-20+(c*80), board);
+			}
+		}
+	}
+	
 	public void highlightTile(Graphics g)
 	{
 		Color highlight=new Color(1, 1, 0, .3F); //.3F is alpha to make it more translucent
@@ -118,51 +136,51 @@ public class Board implements MouseListener
 		{
 			for(int c=0; c<8; c++)
 			{
-				if(c==0)
+				if(c==1)
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Pawn(), "BLACK"));
 				}
-				else if(c==7)
+				else if(c==6)
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Pawn(), "WHITE"));
 				}
-				else if(c==1 && (r==0 || r==7))
+				else if(c==0 && (r==0 || r==7))
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Rook(), "BLACK"));
 				}
-				else if(c==1 && (r==1 || r==6))
+				else if(c==0 && (r==1 || r==6))
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Knight(), "BLACK"));
 				}
-				else if(c==1 && (r==2 || r==5))
+				else if(c==0 && (r==2 || r==5))
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Bishop(), "BLACK"));
 				}
-				else if(c==1 && r==3)
+				else if(c==0 && r==3)
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Queen(), "BLACK"));
 				}
-				else if(c==1 && r==4)
+				else if(c==0 && r==4)
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new King(), "BLACK"));
 				}	
-				else if(c==6 && (r==0 || r==7))
+				else if(c==7 && (r==0 || r==7))
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Rook(), "WHITE"));
 				}
-				else if(c==6 && (r==1 || r==6))
+				else if(c==7 && (r==1 || r==6))
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Knight(), "WHITE"));
 				}
-				else if(c==6 && (r==2 || r==5))
+				else if(c==7 && (r==2 || r==5))
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Bishop(), "WHITE"));
 				}
-				else if(c==6 && r==3)
+				else if(c==7 && r==3)
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new Queen(), "WHITE"));
 				}
-				else if(c==6 && r==4)
+				else if(c==7 && r==4)
 				{
 					tiles[r][c]=new Tile(r, c, new Piece(new King(), "WHITE"));
 				}
@@ -254,7 +272,7 @@ public class Board implements MouseListener
 			{
 				if(selectedTile[0]==-1 && selectedTile[1]==-1)
 				{
-					System.out.println(tiles[col][row].toString());
+					//System.out.println(tiles[col][row].toString());
 					
 					selectedTile[0]=col;
 					selectedTile[1]=row;
