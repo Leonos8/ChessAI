@@ -1,6 +1,7 @@
-Add in the pieces graphically
 Create a method that checks if the move is legal and if it is, it moves the piece to that location
 Create a create game gui first allowing to choose between single player and two-player
 Add a toolbar to the top
 Add a stopwatch feature
+Add AI for 1 player, and make a mode for AI to play itself
+Create levels of difficulty for the AI
 Maybe try and figure out how to add a two-player feature from different computers

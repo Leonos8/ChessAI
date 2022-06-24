@@ -111,13 +111,12 @@ public class Board implements MouseListener
 	{
 		Graphics2D g2d=(Graphics2D) g;
 		
-		for(int c=0; c<8; c++)
+		for(int r=0; r<8; r++)
 		{
-			for(int r=0; r<8; r++)
+			for(int c=0; c<8; c++)
 			{
-				//System.out.println(tiles[c][r].getPieceString());
-				g2d.drawImage(tiles[r][c].getPiece().getPieceImage(), startingX-20+(r*80), 
-						startingY-20+(c*80), board);
+				g2d.drawImage(tiles[c][r].getPiece().getPieceImage(), startingX-20+(c*80), 
+						startingY-20+(r*80), board);
 			}
 		}
 	}
@@ -224,34 +223,13 @@ public class Board implements MouseListener
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-		//might do clicked, but it isnt sensitive enough
-		/*int col;
-		int row;
-		if(e.getX()>=startingX && e.getX()<=startingX+720 && e.getY()>=startingY 
-		&& e.getX()<=startingX+720)
-		{
-			col=(e.getX()-startingX)/80;
-			row=(e.getY()-startingY)/80;
-			
-			//System.out.println(col+", "+row); //Should be outputted as rowxcol (aka c4)
-			System.out.println(tiles[col][row].toString());
-		}*/
+		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) 
 	{
-		/*int col;
-		int row;
-		if(e.getX()>=startingX && e.getX()<=startingX+720 && e.getY()>=startingY 
-		&& e.getX()<=startingX+720)
-		{
-			col=(e.getX()-startingX)/80;
-			row=(e.getY()-startingY)/80;
-			
-			//System.out.println(col+", "+row); //Should be outputted as rowxcol (aka c4)
-			System.out.println(tiles[col][row].toString());
-		}*/
+		
 	}
 
 	@Override
@@ -266,7 +244,7 @@ public class Board implements MouseListener
 			row=(e.getY()-startingY)/80;
 			
 			//System.out.println(col+", "+row); //Should be outputted as rowxcol (aka c4)
-			System.out.println(tiles[col][row].toString());
+			//System.out.println(tiles[col][row].toString());
 			
 			if(!tiles[col][row].getPieceString().equals("EMPTY"))
 			{
