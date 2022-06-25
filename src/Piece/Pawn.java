@@ -5,15 +5,41 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import Graphics.Tile;
+
 public class Pawn
 {
 	static ImageIcon pawnIcon;
 	
 	static Image pawnImage;
 	
+	static boolean firstMove=true;
+	
 	public Pawn()
 	{
 		
+	}
+	
+	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 
+			int newCol, int newRow, String color)
+	{
+		if(color.equals("WHITE"))
+		{
+			if(firstMove)
+			{
+				if(newRow==curRow-2)
+				{
+					return true;
+				}
+			}
+			
+			//if(newRow==curRow-1 && tile[])
+			{
+				
+			}
+		}
+		
+		return false;
 	}
 	
 	public static void setImageIcon(String clr)

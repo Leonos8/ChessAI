@@ -9,10 +9,10 @@ public class Tile
 	
 	Piece piece;
 	
-	public Tile(int row, int col, Piece piece)
+	public Tile(int col, int row, Piece piece)
 	{
-		this.row=row;
 		this.col=col;
+		this.row=row;
 		this.piece=piece;
 	}
 	

@@ -2,6 +2,9 @@ package Piece;
 
 import java.awt.Image;
 
+import Graphics.Board;
+import Graphics.Tile;
+
 public class Piece
 {
 	Object pieceType;
@@ -57,6 +60,21 @@ public class Piece
 		}
 		else
 			return null;
+	}
+	
+	public static void Move(Tile[][] tile, int curCol, int curRow, int newCol, int newRow)
+	{
+		System.out.println(curCol+", "+newCol+", "+curRow+", "+newRow);
+		if(curCol!=newCol || curRow!=newRow)
+		{
+			tile[newCol][newRow]=new Tile(newCol, newRow, 
+					new Piece(tile[curCol][curRow].getPiece(), 
+							tile[curCol][curRow].getPiece().getColor()));
+			
+			EmptyTile.createEmptyTile(tile, curCol, curRow);
+		}
+		
+		Board.board.repaint();
 	}
 	
 	public String getColor()
