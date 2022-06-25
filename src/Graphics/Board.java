@@ -246,28 +246,28 @@ public class Board implements MouseListener
 			//System.out.println(col+", "+row); //Should be outputted as rowxcol (aka c4)
 			//System.out.println(tiles[col][row].toString());
 			
-			if(!tiles[col][row].getPieceString().equals("EMPTY"))
+			if(selectedTile[0]==-1 && selectedTile[1]==-1)
 			{
-				if(selectedTile[0]==-1 && selectedTile[1]==-1)
+				//System.out.println(tiles[col][row].toString());
+				
+				if(!tiles[col][row].getPieceString().equals("EMPTY"))
 				{
-					//System.out.println(tiles[col][row].toString());
-					
 					selectedTile[0]=col;
 					selectedTile[1]=row;
 				}
-				else
-				{
-					//System.out.println(tiles[col][row].getPiece().move());
-					//legalMove();
-					/*
-					 * boolean isValidMove to determine if the move is valid
-					 * then send it through a method to move that piece if the move is valid
-					 * isValidMove is a method on every piece
-					 * going to need location input and color input since pawn can only move in one dir
-					 */
-					selectedTile[0]=-1;
-					selectedTile[1]=-1;
-				}
+			}
+			else
+			{
+				//System.out.println(tiles[col][row].getPiece().move());
+				//legalMove();
+				/*
+				 * boolean isValidMove to determine if the move is valid
+				 * then send it through a method to move that piece if the move is valid
+				 * isValidMove is a method on every piece
+				 * going to need location input and color input since pawn can only move in one dir
+				 */
+				selectedTile[0]=-1;
+				selectedTile[1]=-1;
 			}
 		}
 		
