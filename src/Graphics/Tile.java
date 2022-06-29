@@ -1,5 +1,6 @@
 package Graphics;
 
+import Piece.EmptyTile;
 import Piece.Piece;
 
 public class Tile 
@@ -16,9 +17,16 @@ public class Tile
 		this.piece=piece;
 	}
 	
+	public Tile(int col, int row, Tile tile)
+	{
+		this.col=col;
+		this.row=row;
+		this.piece=piece;
+	}
+	
 	public boolean containsPiece()
 	{
-		if(piece!=null)
+		if(piece!=null && !(piece.getPiece() instanceof EmptyTile))
 		{
 			return true;
 		}
@@ -29,6 +37,11 @@ public class Tile
 	public String getPieceString()
 	{
 		return piece.toString();
+	}
+	
+	public void setPiece(Piece piece)
+	{
+		this.piece=piece;
 	}
 	
 	public Piece getPiece()

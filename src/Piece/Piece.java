@@ -1,5 +1,6 @@
 package Piece;
 
+import java.awt.Graphics;
 import java.awt.Image;
 
 import Graphics.Board;
@@ -7,7 +8,7 @@ import Graphics.Tile;
 
 public class Piece
 {
-	Object pieceType;
+	 Object pieceType;
 	
 	String color;
 	
@@ -30,6 +31,25 @@ public class Piece
 	public Object getPiece()
 	{
 		return pieceType;
+	}
+	
+	public boolean pieceIsLegalMove(Tile[][] tile ,int curCol, int curRow, 
+			int newCol, int newRow, String color)
+	{
+		if(tile[curCol][curRow].getPiece().getPiece() instanceof Pawn)
+		{
+			return Pawn.isLegalMove(tile, curCol, curRow, newCol, newRow, color);
+		}
+		else if(tile[curCol][curRow].getPiece().getPiece() instanceof Rook)
+		{
+			return Rook.isLegalMove(tile, curCol, curRow, newCol, newRow, color);
+		}
+		else if(tile[curCol][curRow].getPiece().getPiece() instanceof Knight)
+		{
+			return Knight.isLegalMove(tile, curCol, curRow, newCol, newRow, color);
+		}
+		
+		return false;
 	}
 	
 	public Image getPieceImage()
@@ -64,17 +84,9 @@ public class Piece
 	
 	public static void Move(Tile[][] tile, int curCol, int curRow, int newCol, int newRow)
 	{
-		System.out.println(curCol+", "+newCol+", "+curRow+", "+newRow);
-		if(curCol!=newCol || curRow!=newRow)
-		{
-			tile[newCol][newRow]=new Tile(newCol, newRow, 
-					new Piece(tile[curCol][curRow].getPiece(), 
-							tile[curCol][curRow].getPiece().getColor()));
+		tile[newCol][newRow].setPiece(tile[curCol][curRow].getPiece());
 			
-			EmptyTile.createEmptyTile(tile, curCol, curRow);
-		}
-		
-		Board.board.repaint();
+		EmptyTile.createEmptyTile(tile, curCol, curRow);
 	}
 	
 	public String getColor()

@@ -111,7 +111,6 @@ public class Board implements MouseListener
 	public void drawPieces(Graphics g)
 	{
 		Graphics2D g2d=(Graphics2D) g;
-		System.out.println(1);
 		
 		for(int c=0; c<8; c++)
 		{
@@ -255,13 +254,8 @@ public class Board implements MouseListener
 			col=(e.getX()-startingX)/80;
 			row=(e.getY()-startingY)/80;
 			
-			//System.out.println(col+", "+row); //Should be outputted as rowxcol (aka c4)
-			System.out.println(tiles[col][row].toString());
-			
 			if(selectedTile[0]==-1 && selectedTile[1]==-1)
 			{
-				//System.out.println(tiles[col][row].toString());
-				
 				if(!tiles[col][row].getPieceString().equals("EMPTY"))
 				{
 					selectedTile[0]=col;
@@ -270,22 +264,14 @@ public class Board implements MouseListener
 			}
 			else
 			{
-				//System.out.println(tiles[col][row].getPiece().move());
-				System.out.println(getCol(e.getX())+", "+ getRow(e.getY()));
-				
-				System.out.println(Pawn.isLegalMove(tiles, selectedTile[0], selectedTile[1], 
-						getCol(e.getX()), getRow(e.getY()),
-						tiles[selectedTile[0]][selectedTile[1]].getPiece().getColor()));
-				
-				if(Pawn.isLegalMove(tiles, selectedTile[0], selectedTile[1], 
-						getCol(e.getX()), getRow(e.getY()),
+				if(tiles[col][row].getPiece().pieceIsLegalMove(tiles, selectedTile[0], 
+						selectedTile[1], getCol(e.getX()), getRow(e.getY()),
 						tiles[selectedTile[0]][selectedTile[1]].getPiece().getColor()))
 				{
-					System.out.println("Move");
 					Piece.Move(tiles, selectedTile[0], selectedTile[1], 
 							getCol(e.getX()), getRow(e.getY()));
 					
-					board.repaint();
+					board.repaint();	
 				}
 				/*
 				 * boolean isValidMove to determine if the move is valid

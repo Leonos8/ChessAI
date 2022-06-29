@@ -5,6 +5,8 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import Graphics.Tile;
+
 public class Bishop 
 {
 	static ImageIcon bishopIcon;
@@ -14,6 +16,43 @@ public class Bishop
 	public Bishop()
 	{
 		
+	}
+	
+	public static boolean isLegalMove(Tile[][] tile, int curCol, int curRow, 
+			int newCol, int newRow, String color)
+	{
+		int s1=curCol-newCol;
+		int s2=curRow-newRow;
+		if(color.equals("WHITE"))
+		{
+			if(!tile[newCol][newRow].containsPiece())
+			{
+				
+				if(!checkDiagonals(tile, curCol, curRow,  //Might remove once able to move bak
+						newCol, newRow, color))
+				{
+					
+					if(curCol-newCol==curRow-newRow)
+					{
+						return true;
+					}
+					//return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	public static boolean checkDiagonals(Tile[][] tile, int curCol, int curRow, 
+			int newCol, int newRow, String color)
+	{
+		if(curCol>newCol)
+		{
+			
+		}
+		
+		return true;
 	}
 	
 	public static void setImageIcon(String clr)

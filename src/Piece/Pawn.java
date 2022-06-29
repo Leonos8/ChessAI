@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import Graphics.Board;
 import Graphics.Tile;
 
 public class Pawn
@@ -25,21 +26,30 @@ public class Pawn
 	{
 		if(color.equals("WHITE"))
 		{
-			if(firstMove)
+			if(!tile[newCol][newRow].containsPiece())
 			{
-				if(newRow==curRow-2)
+				if(firstMove)
 				{
-					return true;
+					if(newRow==curRow-2)
+					{
+						return true;
+					}
+					
+					if(newRow==curRow-1)
+					{
+						return true;
+					}
 				}
-			}
-			
-			//if(newRow==curRow-1 && tile[])
-			{
 				
+				//if(newRow==curRow-1 && tile[])
+				{
+					
+				}
 			}
 		}
 		
-		return false;
+		return true;
+		//return false; TODO will be changed once making this piece movable, but making test
 	}
 	
 	public static void setImageIcon(String clr)

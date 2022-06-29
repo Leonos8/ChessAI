@@ -5,6 +5,8 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import Graphics.Tile;
+
 public class Knight 
 {
 	static ImageIcon knightIcon;
@@ -14,6 +16,28 @@ public class Knight
 	public Knight()
 	{
 		
+	}
+	
+	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 
+			int newCol, int newRow, String color)
+	{
+		if(!tile[newCol][newRow].containsPiece())
+		{
+			if(((newRow==curRow+2 || newRow==curRow-2) 
+					&& (newCol==curCol+1 || newCol==curCol-1))
+					|| ((newRow==curRow+1 || newRow==curRow-1) 
+					&& (newCol==curCol+2 || newCol==curCol-2)))
+			{
+				return true;
+			}
+		}
+		
+		if(tile[newCol][newRow].containsPiece())
+		{
+			
+		}
+		
+		return false;
 	}
 	
 	public static void setImageIcon(String clr)
