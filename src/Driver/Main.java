@@ -2,7 +2,7 @@ package Driver;
 
 import javax.swing.SwingUtilities;
 
-import Graphics.Board;
+import Graphics.GUI;
 
 public class Main 
 {
@@ -12,7 +12,7 @@ public class Main
 				{
 					public void run()
 					{
-						Board board=new Board();
+						GUI gui=new GUI();
 					}
 				});
 	}

@@ -12,6 +12,8 @@ public class Piece
 	
 	String color;
 	
+	boolean moved=false;
+	
 	public Piece(Object pieceType, String color)
 	{
 		this.pieceType=pieceType;
@@ -48,8 +50,33 @@ public class Piece
 		{
 			return Knight.isLegalMove(tile, curCol, curRow, newCol, newRow, color);
 		}
+		else if(tile[curCol][curRow].getPiece().getPiece() instanceof Bishop)
+		{
+			return Bishop.isLegalMove(tile, curCol, curRow, newCol, newRow, color);
+		}
+		else if(tile[curCol][curRow].getPiece().getPiece() instanceof Queen)
+		{
+			return Queen.isLegalMove(tile, curCol, curRow, newCol, newRow, color);
+		}
+		else if(tile[curCol][curRow].getPiece().getPiece() instanceof King)
+		{
+			return King.isLegalMove(tile, curCol, curRow, newCol, newRow, color);
+		}
 		
 		return false;
+	}
+	
+	public static void Move(Tile[][] tile, int curCol, int curRow, int newCol, int newRow)
+	{
+		if(!tile[curCol][curRow].getPiece().getMoved())
+		{	
+			tile[curCol][curRow].getPiece().setMoved(true);
+		}
+		tile[newCol][newRow].setPiece(tile[curCol][curRow].getPiece());
+			
+		EmptyTile.createEmptyTile(tile, curCol, curRow);
+		
+		Board.board.repaint();
 	}
 	
 	public Image getPieceImage()
@@ -82,11 +109,14 @@ public class Piece
 			return null;
 	}
 	
-	public static void Move(Tile[][] tile, int curCol, int curRow, int newCol, int newRow)
+	public void setMoved(boolean moved)
 	{
-		tile[newCol][newRow].setPiece(tile[curCol][curRow].getPiece());
-			
-		EmptyTile.createEmptyTile(tile, curCol, curRow);
+		this.moved=moved;
+	}
+	
+	public boolean getMoved()
+	{
+		return moved;
 	}
 	
 	public String getColor()

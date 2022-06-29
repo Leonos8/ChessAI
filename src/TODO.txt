@@ -1,12 +1,3 @@
-Create a method that checks if the move is legal and if it is, it moves the piece to that location
-
-Rook
-Knight
-Bishop
-Queen
-King
-Pawn
-
 Create a create game gui first allowing to choose between single player and two-player
 Add a toolbar to the top
 Add a stopwatch feature

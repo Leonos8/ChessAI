@@ -14,7 +14,7 @@ public class Pawn
 	
 	static Image pawnImage;
 	
-	static boolean firstMove=true;
+	//static boolean enPassant=false;
 	
 	public Pawn()
 	{
@@ -22,34 +22,75 @@ public class Pawn
 	}
 	
 	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 
-			int newCol, int newRow, String color)
+			int newCol, int newRow, String color) //TODO program en passant
 	{
 		if(color.equals("WHITE"))
 		{
 			if(!tile[newCol][newRow].containsPiece())
 			{
-				if(firstMove)
+				if(!tile[curCol][curRow].getPiece().getMoved())
 				{
-					if(newRow==curRow-2)
-					{
-						return true;
-					}
-					
-					if(newRow==curRow-1)
+					if(newCol==curCol && newRow==curRow-2)
 					{
 						return true;
 					}
 				}
-				
-				//if(newRow==curRow-1 && tile[])
-				{
 					
+				if(newCol==curCol && newRow==curRow-1)
+				{
+					return true;
+				}
+			}
+				
+			if(tile[newCol][newRow].containsPiece() 
+					&& !(tile[newCol][newRow].getPiece().getColor().equals(color)))
+			{
+				if(newRow==curRow-1 && (newCol==curCol-1 || newCol==curCol+1))
+				{
+					if(tile[newCol][newRow].getPiece().getPiece() instanceof King)
+					{
+						Board.captureKing(tile[newCol][newRow].getPiece());
+					}
+					
+					Board.capturePiece(tile, curCol, curRow, newCol, newRow);
 				}
 			}
 		}
 		
-		return true;
-		//return false; TODO will be changed once making this piece movable, but making test
+		if(color.equals("BLACK"))
+		{
+			if(!tile[newCol][newRow].containsPiece())
+			{
+				if(!tile[curCol][curRow].getPiece().getMoved())
+				{
+					if(newCol==curCol && newRow==curRow+2)
+					{
+						return true;
+					}
+				}
+					
+				if(newCol==curCol && newRow==curRow+1)
+				{
+					return true;
+				}
+			}
+				
+			if(tile[newCol][newRow].containsPiece() 
+					&& !(tile[newCol][newRow].getPiece().getColor().equals(color)))
+			{
+				if(newRow==curRow+1 && (newCol==curCol-1 || newCol==curCol+1))
+				{
+					if(tile[newCol][newRow].getPiece().getPiece() instanceof King)
+					{
+						Board.captureKing(tile[newCol][newRow].getPiece());
+					}
+					
+					Board.capturePiece(tile, curCol, curRow, newCol, newRow);
+				}
+			}
+		}	
+		
+		return false;
 	}
 	
 	public static void setImageIcon(String clr)

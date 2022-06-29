@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import Graphics.Board;
 import Graphics.Tile;
 
 public class Knight 
@@ -21,20 +22,26 @@ public class Knight
 	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 
 			int newCol, int newRow, String color)
 	{
-		if(!tile[newCol][newRow].containsPiece())
-		{
-			if(((newRow==curRow+2 || newRow==curRow-2) 
-					&& (newCol==curCol+1 || newCol==curCol-1))
-					|| ((newRow==curRow+1 || newRow==curRow-1) 
-					&& (newCol==curCol+2 || newCol==curCol-2)))
+		if(((newRow==curRow+2 || newRow==curRow-2) 
+				&& (newCol==curCol+1 || newCol==curCol-1))
+				|| ((newRow==curRow+1 || newRow==curRow-1) 
+				&& (newCol==curCol+2 || newCol==curCol-2)))
+			{
+			if(!tile[newCol][newRow].containsPiece())
 			{
 				return true;
 			}
-		}
-		
-		if(tile[newCol][newRow].containsPiece())
-		{
-			
+
+			if(tile[newCol][newRow].containsPiece() 
+					&& !(tile[newCol][newRow].getPiece().getColor().equals(color)))
+			{
+				if(tile[newCol][newRow].getPiece().getPiece() instanceof King)
+				{
+						Board.captureKing(tile[newCol][newRow].getPiece());
+				}
+					
+				Board.capturePiece(tile, curCol, curRow, newCol, newRow);
+			}
 		}
 		
 		return false;

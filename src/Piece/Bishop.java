@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import Graphics.Board;
 import Graphics.Tile;
 
 public class Bishop 
@@ -21,22 +22,24 @@ public class Bishop
 	public static boolean isLegalMove(Tile[][] tile, int curCol, int curRow, 
 			int newCol, int newRow, String color)
 	{
-		int s1=curCol-newCol;
-		int s2=curRow-newRow;
-		if(color.equals("WHITE"))
+		if(Math.abs(curCol-newCol)==Math.abs(curRow-newRow))
 		{
-			if(!tile[newCol][newRow].containsPiece())
+			if(!isObstructed(tile ,curCol, curRow, newCol, newRow))
 			{
-				
-				if(!checkDiagonals(tile, curCol, curRow,  //Might remove once able to move bak
-						newCol, newRow, color))
+				if(!tile[newCol][newRow].containsPiece())
 				{
+					return true;
+				}
 					
-					if(curCol-newCol==curRow-newRow)
+				if(tile[newCol][newRow].containsPiece() 
+						&& !(tile[newCol][newRow].getPiece().getColor().equals(color)))
+				{
+					if(tile[newCol][newRow].getPiece().getPiece() instanceof King)
 					{
-						return true;
+							Board.captureKing(tile[newCol][newRow].getPiece());
 					}
-					//return true;
+						
+					Board.capturePiece(tile, curCol, curRow, newCol, newRow);
 				}
 			}
 		}
@@ -44,15 +47,55 @@ public class Bishop
 		return false;
 	}
 	
-	public static boolean checkDiagonals(Tile[][] tile, int curCol, int curRow, 
-			int newCol, int newRow, String color)
+	public static boolean isObstructed(Tile[][] tile, int curCol, int curRow, 
+			int newCol, int newRow)
 	{
-		if(curCol>newCol)
+		int dif=0;
+		
+		boolean obstruction=false;
+		
+		dif=Math.abs(curCol-newCol);
+		
+		for(int i=1; i<dif; i++)
 		{
+			if(newRow>curRow)
+			{
+				if(newCol>curCol)
+				{
+					if(tile[curCol+i][curRow+i].containsPiece())
+					{
+						obstruction=true;
+					}
+				}
+				if(newCol<curCol)
+				{
+					if(tile[curCol-i][curRow+i].containsPiece())
+					{
+						obstruction=true;
+					}
+				}
+			}
 			
+			if(newRow<curRow)
+			{
+				if(newCol<curCol)
+				{
+					if(tile[curCol-i][curRow-i].containsPiece())
+					{
+						obstruction=true;
+					}
+				}
+				if(newCol>curCol)
+				{
+					if(tile[curCol+i][curRow-i].containsPiece())
+					{
+						obstruction=true;
+					}
+				}
+			}
 		}
 		
-		return true;
+		return obstruction;
 	}
 	
 	public static void setImageIcon(String clr)

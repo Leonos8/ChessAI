@@ -6,27 +6,28 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Piece.Bishop;
+import Piece.EmptyTile;
 import Piece.King;
 import Piece.Knight;
 import Piece.Pawn;
 import Piece.Piece;
 import Piece.Queen;
 import Piece.Rook;
-import Piece.EmptyTile;
 
 public class Board implements MouseListener
 {
-	JFrame frame;
-	
 	public static JPanel board;
 	
-	Tile[][] tiles=new Tile[8][8];
+	static Tile[][] tiles=new Tile[8][8];
+	
+	static ArrayList<Piece> capturedPieces=new ArrayList<Piece>();
 	
 	int[] selectedTile=new int[] {-1, -1};
 	
@@ -38,16 +39,9 @@ public class Board implements MouseListener
 	int endingY;
 	
 	public Board()
-	{
-		frame=new JFrame("Chess");
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//TODO make when screen minimized, it takes up the size of the board at the top left 
-		//corner
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-		
-		startingX=(frame.getWidth()/2)-360;
-		startingY=(frame.getHeight()/2)-360;
+	{	
+		startingX=(GUI.frame.getWidth()/2)-360;
+		startingY=(GUI.frame.getHeight()/2)-360;
 		endingX=startingX+640;
 		endingY=startingY+640;
 		
@@ -101,7 +95,7 @@ public class Board implements MouseListener
 		board.setLayout(null);
 		board.setVisible(true);
 		board.addMouseListener(this);
-		frame.getContentPane().add(board);
+		GUI.frame.getContentPane().add(board);
 		
 		setupBoard();
 		
@@ -202,6 +196,26 @@ public class Board implements MouseListener
 		}
 	}
 	
+	public static void capturePiece(Tile[][] tile, int curCol, int curRow, 
+			int newCol, int newRow)
+	{
+		tiles=tile;
+		
+		capturedPieces.add(tiles[newCol][newRow].getPiece());
+		
+		Piece.Move(tile, curCol, curRow, newCol, newRow);
+		
+		/*for(int i=0; i<capturedPieces.size(); i++)
+		{
+			System.out.println(capturedPieces.get(i).getPieceType());
+		}*/
+	}
+	
+	public static void captureKing(Piece king)
+	{
+		System.out.println("CHECKMATE");
+	}
+	
 	public void createLabels()
 	{
 		JLabel[] letterLabels=new JLabel[8];
@@ -269,17 +283,8 @@ public class Board implements MouseListener
 						tiles[selectedTile[0]][selectedTile[1]].getPiece().getColor()))
 				{
 					Piece.Move(tiles, selectedTile[0], selectedTile[1], 
-							getCol(e.getX()), getRow(e.getY()));
-					
-					board.repaint();	
+							getCol(e.getX()), getRow(e.getY()));	
 				}
-				/*
-				 * boolean isValidMove to determine if the move is valid
-				 * then send it through a method to move that piece if the move is valid
-				 * isValidMove is a method on every piece
-				 * going to need location input and color input since pawn can only move 
-				 * in one dir
-				 */
 				selectedTile[0]=-1;
 				selectedTile[1]=-1;
 			}

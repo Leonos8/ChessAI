@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import Graphics.Board;
 import Graphics.Tile;
 
 public class Rook 
@@ -21,27 +22,33 @@ public class Rook
 	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 
 			int newCol, int newRow, String color)
 	{
-		if(!tile[newCol][newRow].containsPiece())
+		if(curCol==newCol || curRow==newRow)
 		{
-			if(curCol==newCol || curRow==newRow)
+			if(!isObstructed(tile, curCol, curRow, newCol, newRow))
 			{
-				if(!isObstructed(tile ,curCol, curRow, newCol, newRow, color))
+				if(!tile[newCol][newRow].containsPiece())
 				{
 					return true;
 				}
+				
+				if(tile[newCol][newRow].containsPiece() 
+						&& !(tile[newCol][newRow].getPiece().getColor().equals(color)))
+				{
+					if(tile[newCol][newRow].getPiece().getPiece() instanceof King)
+					{
+						Board.captureKing(tile[newCol][newRow].getPiece());
+					}
+						
+					Board.capturePiece(tile, curCol, curRow, newCol, newRow);
+				}
 			}
-		}
-		
-		if(tile[newCol][newRow].containsPiece())
-		{
-			
 		}
 		
 		return false;
 	}
 	
 	public static boolean isObstructed(Tile[][] tile ,int curCol, int curRow, 
-			int newCol, int newRow, String color)
+			int newCol, int newRow)
 	{
 		int dif=0;
 		
@@ -49,21 +56,20 @@ public class Rook
 		
 		if(curCol==newCol)
 		{
-			dif=newRow-curRow;
-			dif=Math.abs(dif);
+			dif=Math.abs(curRow-newRow);
 			
-			for(int i=1; i<=dif; i++)
+			for(int i=1; i<dif; i++)
 			{
-				if(newRow>curRow)
+				if(curRow>newRow)
 				{
-					if(tile[curCol][curRow+i].containsPiece())
+					if(tile[curCol][curRow-i].containsPiece())
 					{
 						obstruction=true;
 					}
 				}
-				else if(newRow<curRow)
+				else if(curRow<newRow)
 				{
-					if(tile[curCol][curRow-i].containsPiece())
+					if(tile[curCol][curRow+i].containsPiece())
 					{
 						obstruction=true;
 					}
@@ -73,21 +79,20 @@ public class Rook
 		
 		if(curRow==newRow)
 		{
-			dif=newCol-curCol;
-			dif=Math.abs(dif);
+			dif=Math.abs(curCol-newCol);
 			
-			for(int i=1; i<=dif; i++)
+			for(int i=1; i<dif; i++)
 			{
-				if(newCol>curCol)
+				if(curCol>newCol)
 				{
-					if(tile[curCol+i][curRow].containsPiece())
+					if(tile[curCol-i][curRow].containsPiece())
 					{
 						obstruction=true;
 					}
 				}
-				else if(newCol<curCol)
+				else if(curCol<newCol)
 				{
-					if(tile[curCol-i][curRow].containsPiece())
+					if(tile[curCol+i][curRow].containsPiece())
 					{
 						obstruction=true;
 					}
