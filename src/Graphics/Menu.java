@@ -6,23 +6,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class Menu implements ActionListener
 {
 	JPanel menu=new JPanel();
 	
+	JPanel player1Panel=new JPanel();
+	JPanel player2Panel=new JPanel();
+	JPanel trainingPanel=new JPanel();
+	JPanel settingsPanel=new JPanel();
+	
 	JButton player1Button=new JButton();
 	JButton player2Button=new JButton();
 	JButton trainingButton=new JButton();
 	JButton settingsButton=new JButton();
+	JButton backButton=new JButton();
+	JButton startGameButton=new JButton();
 	
+	JTextField player1NameInput=new JTextField();
+	JTextField player2NameInput=new JTextField();
+	JTextField computerNameInput=new JTextField();
 	
 	public Menu()
 	{
 		menu.setBackground(Color.cyan);
 		menu.setLayout(null);
 		menu.setVisible(true);
+		
 		GUI.frame.getContentPane().add(menu);
 		
 		////////////////////////////////////////////////		
@@ -61,28 +74,219 @@ public class Menu implements ActionListener
 		
 		menu.add(settingsButton);
 	}
+	
+	public void create1PlayerPanel()
+	{	
+		menu.setVisible(false);
+		
+		player1Panel.setBackground(Color.cyan);
+		player1Panel.setLayout(null);
+		player1Panel.setVisible(true);
+		
+		GUI.frame.getContentPane().add(player1Panel);
+		
+		/////////////////////////////////////////////////////////				
+		backButton.setFont(new Font("Arial", Font.PLAIN, 24));
+		backButton.setText("Back");
+		backButton.setBounds(25, 25, 150, 50);
+		backButton.addActionListener(this);
+		backButton.setVisible(true);
+		
+		player1Panel.add(backButton);
+		
+		/////////////////////////////////////////////////////////		
+		JLabel playerName=new JLabel();
+		
+		playerName.setFont(new Font("Arial", Font.PLAIN, 24));
+		playerName.setText("Player:");
+		playerName.setBounds(GUI.frame.getWidth()/2-80, 25, 150, 50);
+		playerName.setVisible(true);
+		
+		player1Panel.add(playerName);
+		
+		/////////////////////////////////////////////////////////		
+		JTextField playerNameInput=new JTextField();
+		
+		playerNameInput.setFont(new Font("Arial", Font.PLAIN, 24));
+		playerNameInput.setBounds(GUI.frame.getWidth()/2+5, 40, 150, 25);
+		playerNameInput.setVisible(true);
+		
+		player1Panel.add(playerNameInput);
+		
+		/////////////////////////////////////////////////////////		
+		JLabel computerName=new JLabel();
+
+		computerName.setFont(new Font("Arial", Font.PLAIN, 24));
+		computerName.setText("Computer:");
+		computerName.setBounds(GUI.frame.getWidth()/2-120, 75, 150, 50);
+		computerName.setVisible(true);
+
+		player1Panel.add(computerName);
+
+		/////////////////////////////////////////////////////////		
+		computerNameInput.setFont(new Font("Arial", Font.PLAIN, 24));
+		computerNameInput.setBounds(GUI.frame.getWidth()/2+5, 90, 150, 25);
+		computerNameInput.setVisible(true);
+
+		player1Panel.add(computerNameInput);
+		
+		/////////////////////////////////////////////////////////		
+		JLabel difficultyName=new JLabel();
+
+		difficultyName.setFont(new Font("Arial", Font.PLAIN, 24));
+		difficultyName.setText("Difficulty:");
+		difficultyName.setBounds(GUI.frame.getWidth()/2-108, 125, 150, 50);
+		difficultyName.setVisible(true);
+
+		player1Panel.add(difficultyName);
+		
+		//TODO Add difficult guage for AI, and allow player to choose color
+	}
+	
+	public void create2PlayerPanel()
+	{		
+		menu.setVisible(false);
+		
+		player2Panel.setBackground(Color.cyan);
+		player2Panel.setLayout(null);
+		player2Panel.setVisible(true);
+		
+		GUI.frame.getContentPane().add(player2Panel);
+		
+		/////////////////////////////////////////////////////////				
+		backButton.setFont(new Font("Arial", Font.PLAIN, 24));
+		backButton.setText("Back");
+		backButton.setBounds(25, 25, 150, 50);
+		backButton.addActionListener(this);
+		backButton.setVisible(true);
+		
+		player2Panel.add(backButton);
+		
+		/////////////////////////////////////////////////////////		
+		JLabel player1Name=new JLabel();
+		
+		player1Name.setFont(new Font("Arial", Font.PLAIN, 24));
+		player1Name.setText("Player 1:");
+		player1Name.setBounds(GUI.frame.getWidth()/2-100, 25, 150, 50);
+		player1Name.setVisible(true);
+		
+		player2Panel.add(player1Name);
+		
+		/////////////////////////////////////////////////////////				
+		player1NameInput.setFont(new Font("Arial", Font.PLAIN, 24));
+		player1NameInput.setBounds(GUI.frame.getWidth()/2+5, 40, 150, 25);
+		player1NameInput.setVisible(true);
+		
+		player2Panel.add(player1NameInput);
+		
+		/////////////////////////////////////////////////////////		
+		JLabel player2Name=new JLabel();
+
+		player2Name.setFont(new Font("Arial", Font.PLAIN, 24));
+		player2Name.setText("Player 2:");
+		player2Name.setBounds(GUI.frame.getWidth()/2-100, 75, 150, 50);
+		player2Name.setVisible(true);
+
+		player2Panel.add(player2Name);
+
+		/////////////////////////////////////////////////////////		
+		player2NameInput.setFont(new Font("Arial", Font.PLAIN, 24));
+		player2NameInput.setBounds(GUI.frame.getWidth()/2+5, 90, 150, 25);
+		player2NameInput.setVisible(true);
+
+		player2Panel.add(player2NameInput);
+		
+		//TODO allow player to choose color
+		
+		/////////////////////////////////////////////////////////		
+		startGameButton.setFont(new Font("Arial", Font.PLAIN, 24));
+		startGameButton.setText("Start");
+		startGameButton.setBounds(GUI.frame.getWidth()-175, 25, 150, 50);
+		startGameButton.addActionListener(this);
+		startGameButton.setVisible(true);
+		
+		player2Panel.add(startGameButton);
+	}
+	
+	public void createTrainingPanel()
+	{
+		
+	}
+	
+	public void createSettingsPanel()
+	{
+		
+	}
+	
+	public void togglePanelVisibility(boolean visible)
+	{
+		menu.setVisible(visible);
+		
+		player1Panel.setVisible(visible);
+		player2Panel.setVisible(visible);
+		trainingPanel.setVisible(visible);
+		settingsPanel.setVisible(visible);
+	}
+	
+	public void toggleBackButtonVisibility(boolean visible)
+	{
+		backButton.setVisible(visible);
+	}
+	
+	public void eraseLabelText()
+	{
+		player1NameInput.setText("");
+		player2NameInput.setText("");
+		computerNameInput.setText("");
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
 		if(e.getSource()==player1Button)
 		{
-			
+			create1PlayerPanel();
 		}
 		
 		if(e.getSource()==player2Button)
 		{
-			
+			create2PlayerPanel();
 		}
 		
 		if(e.getSource()==trainingButton)
 		{
-			
+			createTrainingPanel();
 		}
 		
 		if(e.getSource()==settingsButton)
 		{
+			createSettingsPanel();
+		}
+		
+		if(e.getSource()==backButton)
+		{
+			togglePanelVisibility(false);
 			
+			backButton.setVisible(false);
+			menu.setVisible(true);
+			
+			eraseLabelText();
+		}
+		
+		if(e.getSource()==startGameButton)
+		{
+			togglePanelVisibility(false);
+			Board.setPlayer1Text(player1NameInput.getText());
+			
+			if(player2NameInput.getText()==null || player2NameInput.getText().equals(""))
+			{
+				Board.setPlayer2Text(computerNameInput.getText());
+			}
+			else
+				Board.setPlayer2Text(player2NameInput.getText());
+			Board board=new Board();
+			
+			eraseLabelText();
 		}
 	}
 }

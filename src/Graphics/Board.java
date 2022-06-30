@@ -38,8 +38,11 @@ public class Board implements MouseListener
 	int endingX;
 	int endingY;
 	
+	static String player1Name="";
+	static String player2Name="";
+	
 	public Board()
-	{	
+	{
 		startingX=(GUI.frame.getWidth()/2)-360;
 		startingY=(GUI.frame.getHeight()/2)-360;
 		endingX=startingX+640;
@@ -100,6 +103,36 @@ public class Board implements MouseListener
 		setupBoard();
 		
 		createLabels();
+		
+		//////////////////////////////////////////////////////////////////////
+		JLabel player1Label=new JLabel();
+		
+		player1Label.setFont(new Font("ARIAL", Font.BOLD, 24));
+		if(player1Name==null || player1Name.equals(""))
+		{
+			player1Label.setText("Player 1:");
+		}
+		else
+			player1Label.setText(getPlayer1Text()+":");
+		player1Label.setBounds(startingX, endingY+10, 100, 100);
+		player1Label.setVisible(true);
+		
+		board.add(player1Label);
+		
+		//////////////////////////////////////////////////////////////////////
+		JLabel player2Label=new JLabel();
+		
+		player2Label.setFont(new Font("ARIAL", Font.BOLD, 24));
+		if(player2Name==null || player2Name.equals(""))
+		{
+			player2Label.setText("Player 2:");
+		}
+		else
+			player2Label.setText(getPlayer2Text()+":");
+		player2Label.setBounds(endingX-100, endingY+10, 100, 100);
+		player2Label.setVisible(true);
+		
+		board.add(player2Label);
 	}
 	
 	public void drawPieces(Graphics g)
@@ -229,7 +262,7 @@ public class Board implements MouseListener
 			letterLabels[i]=new JLabel();
 			letterLabels[i].setFont(new Font("ARIAL", Font.BOLD, 24));
 			letterLabels[i].setText(letter);
-			letterLabels[i].setBounds((startingX+28)+(80*i), startingY+610, 100, 100); //startingX+32
+			letterLabels[i].setBounds((startingX+28)+(80*i), startingY+610, 100, 100);
 			letterLabels[i].setVisible(true);
 			board.add(letterLabels[i]);
 		}
@@ -239,10 +272,30 @@ public class Board implements MouseListener
 			numberLabels[i]=new JLabel();
 			numberLabels[i].setFont(new Font("ARIAL", Font.BOLD, 24));
 			numberLabels[i].setText(String.valueOf(i+1));
-			numberLabels[i].setBounds(startingX-25, (startingY+550)-(80*i), 100, 100); //startingX+32
+			numberLabels[i].setBounds(startingX-25, (startingY+550)-(80*i), 100, 100); 
 			numberLabels[i].setVisible(true);
 			board.add(numberLabels[i]);
 		}
+	}
+	
+	public static void setPlayer1Text(String text)
+	{
+		player1Name=text;
+	}
+	
+	public String getPlayer1Text()
+	{
+		return player1Name;
+	}
+	
+	public static void setPlayer2Text(String text)
+	{
+		player2Name=text;
+	}
+	
+	public String getPlayer2Text()
+	{
+		return player2Name;
 	}
 
 	@Override
