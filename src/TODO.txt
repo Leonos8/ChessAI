@@ -3,7 +3,10 @@ Add a stopwatch feature
 Add AI for 1 player, and make a mode for AI to play itself
 Create levels of difficulty for the AI
 Maybe try and figure out how to add a two-player feature from different computers
+Create a save game feature
 
+
+Toolbar can have load game, new game, quit game, settings. etc
 
 
 

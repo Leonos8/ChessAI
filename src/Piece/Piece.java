@@ -78,6 +78,20 @@ public class Piece
 		
 		Board.incTurn();
 		
+		if(Board.getTurn()%2==1)
+		{
+			/*try {
+				Board.s2.t.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+		}
+		else if(Board.getTurn()%2==0)
+		{
+			Board.s2.t.start();
+		}
+		
 		Board.board.repaint();
 	}
 	

@@ -45,6 +45,14 @@ public class Board implements MouseListener
 	static String player1Color="WHITE";
 	static String player2Color="BLACK";
 	
+	JLabel player1Label=new JLabel();
+	JLabel player2Label=new JLabel();
+	static JLabel player1TimeLabel;
+	static JLabel player2TimeLabel;
+	
+	public static Stopwatch s1=new Stopwatch("p1");
+	public static Stopwatch s2=new Stopwatch("p2");
+	
 	public Board()
 	{
 		startingX=(GUI.frame.getWidth()/2)-360;
@@ -109,8 +117,6 @@ public class Board implements MouseListener
 		createLabels();
 		
 		//////////////////////////////////////////////////////////////////////
-		JLabel player1Label=new JLabel();
-		
 		player1Label.setFont(new Font("ARIAL", Font.BOLD, 24));
 		if(player1Name==null || player1Name.equals(""))
 		{
@@ -124,8 +130,6 @@ public class Board implements MouseListener
 		board.add(player1Label);
 		
 		//////////////////////////////////////////////////////////////////////
-		JLabel player2Label=new JLabel();
-		
 		player2Label.setFont(new Font("ARIAL", Font.BOLD, 24));
 		if(player2Name==null || player2Name.equals(""))
 		{
@@ -137,6 +141,46 @@ public class Board implements MouseListener
 		player2Label.setVisible(true);
 		
 		board.add(player2Label);
+		
+		//////////////////////////////////////////////////////////////////////
+		player1TimeLabel=new JLabel();
+		
+		player1TimeLabel.setFont(new Font("ARIAL", Font.BOLD, 24));
+		//playerTimeLabel.setText(Stopwatch.getTimeString());
+		player1TimeLabel.setText("00:00");
+		player1TimeLabel.setBounds(player1Label.getX()+player1Label.getWidth()+5, 
+				endingY+10, 100, 100);
+		player1TimeLabel.setVisible(true);
+		
+		s1.t.start();
+		
+		board.add(player1TimeLabel);
+		
+		//////////////////////////////////////////////////////////////////////
+		player2TimeLabel=new JLabel();
+		
+		player2TimeLabel.setFont(new Font("ARIAL", Font.BOLD, 24));
+		//playerTimeLabel.setText(Stopwatch.getTimeString());
+		player2TimeLabel.setText("00:00");
+		player2TimeLabel.setBounds(player2Label.getX()+player2Label.getWidth()+5, 
+				endingY+10, 100, 100);
+		player2TimeLabel.setVisible(true);
+		
+		//Stopwatch s2=new Stopwatch("p2");
+		
+		board.add(player2TimeLabel);
+	}
+	
+	public static void updateTime(String player, String time)
+	{
+		if(player.equals("p1"))
+		{
+			player1TimeLabel.setText(time);
+		}
+		else if(player.equals("p2"))
+		{
+			player2TimeLabel.setText(time);
+		}
 	}
 	
 	public void drawPieces(Graphics g)
@@ -155,7 +199,7 @@ public class Board implements MouseListener
 	
 	public void highlightTile(Graphics g)
 	{
-		Color highlight=new Color(1, 1, 0, .3F); //.3F is alpha to make it more translucent
+		Color highlight=new Color(1, 1, 0, .3F);
 		g.setColor(highlight);
 		
 		g.fillRect(startingX+(selectedTile[0]*80), startingY+(selectedTile[1]*80), 80, 80);

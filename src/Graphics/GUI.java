@@ -12,7 +12,6 @@ public class GUI
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
-		//Board board=new Board();
 		Menu menu=new Menu();
 	}
 }
