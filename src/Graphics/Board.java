@@ -152,7 +152,7 @@ public class Board implements MouseListener
 				endingY+10, 100, 100);
 		player1TimeLabel.setVisible(true);
 		
-		s1.t.start();
+		//s1.t.start();
 		
 		board.add(player1TimeLabel);
 		
@@ -169,6 +169,17 @@ public class Board implements MouseListener
 		//Stopwatch s2=new Stopwatch("p2");
 		
 		board.add(player2TimeLabel);
+		
+		
+		
+		if(getTurn()%2==1)
+		{
+			s1.t.start();
+		}
+		else if(getTurn()%2==0)
+		{
+			s2.t.start();
+		}
 	}
 	
 	public static void updateTime(String player, String time)

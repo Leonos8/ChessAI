@@ -23,11 +23,8 @@ public class Stopwatch implements Runnable
 		long tx;
 		long time;
 		
-		int ms=0; //millisecond
 		int s=0; //second
 		int m=0; //minute
-		int h=0; //hour
-		int d=0; //day
 		
 		while(true)
 		{
