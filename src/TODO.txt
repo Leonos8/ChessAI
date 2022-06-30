@@ -1,4 +1,3 @@
-Create a create game gui first allowing to choose between single player and two-player
 Add a toolbar to the top
 Add a stopwatch feature
 Add AI for 1 player, and make a mode for AI to play itself

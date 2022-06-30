@@ -38,8 +38,12 @@ public class Board implements MouseListener
 	int endingX;
 	int endingY;
 	
+	static int turn=1;
+	
 	static String player1Name="";
 	static String player2Name="";
+	static String player1Color="WHITE";
+	static String player2Color="BLACK";
 	
 	public Board()
 	{
@@ -297,6 +301,16 @@ public class Board implements MouseListener
 	{
 		return player2Name;
 	}
+	
+	public static void incTurn()
+	{
+		turn++;
+	}
+	
+	public static int getTurn()
+	{
+		return turn;
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) 
@@ -325,8 +339,23 @@ public class Board implements MouseListener
 			{
 				if(!tiles[col][row].getPieceString().equals("EMPTY"))
 				{
-					selectedTile[0]=col;
-					selectedTile[1]=row;
+					if(getTurn()%2==1)
+					{
+						if(tiles[col][row].getPiece().getColor()=="WHITE")
+						{
+							selectedTile[0]=col;
+							selectedTile[1]=row;
+						}
+					}
+					
+					if(getTurn()%2==0)
+					{
+						if(tiles[col][row].getPiece().getColor()=="BLACK")
+						{
+							selectedTile[0]=col;
+							selectedTile[1]=row;
+						}
+					}
 				}
 			}
 			else

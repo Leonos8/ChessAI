@@ -76,6 +76,8 @@ public class Piece
 			
 		EmptyTile.createEmptyTile(tile, curCol, curRow);
 		
+		Board.incTurn();
+		
 		Board.board.repaint();
 	}
 	
