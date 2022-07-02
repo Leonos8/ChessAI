@@ -78,6 +78,11 @@ public class Piece
 		
 		Board.incTurn();
 		
+		if(Board.getTurn()%2==1)
+		{
+			//Board.s1.resumeClock();
+		}
+		
 		Board.board.repaint();
 	}
 	

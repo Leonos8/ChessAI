@@ -47,11 +47,10 @@ public class Board implements MouseListener
 	
 	JLabel player1Label=new JLabel();
 	JLabel player2Label=new JLabel();
-	static JLabel player1TimeLabel;
+	static JLabel player1TimeLabel=new JLabel();;
 	static JLabel player2TimeLabel;
 	
-	public static Stopwatch s1=new Stopwatch("p1");
-	public static Stopwatch s2=new Stopwatch("p2");
+	//public static Stopwatch s1=new Stopwatch("p1");
 	
 	public Board()
 	{
@@ -118,12 +117,14 @@ public class Board implements MouseListener
 		
 		//////////////////////////////////////////////////////////////////////
 		player1Label.setFont(new Font("ARIAL", Font.BOLD, 24));
+		
 		if(player1Name==null || player1Name.equals(""))
 		{
 			player1Label.setText("Player 1:");
 		}
 		else
 			player1Label.setText(getPlayer1Text()+":");
+		
 		player1Label.setBounds(startingX, endingY+10, 100, 100);
 		player1Label.setVisible(true);
 		
@@ -131,19 +132,21 @@ public class Board implements MouseListener
 		
 		//////////////////////////////////////////////////////////////////////
 		player2Label.setFont(new Font("ARIAL", Font.BOLD, 24));
+		
 		if(player2Name==null || player2Name.equals(""))
 		{
 			player2Label.setText("Player 2:");
 		}
 		else
 			player2Label.setText(getPlayer2Text()+":");
+		
 		player2Label.setBounds(endingX-100, endingY+10, 100, 100);
 		player2Label.setVisible(true);
 		
 		board.add(player2Label);
 		
 		//////////////////////////////////////////////////////////////////////
-		player1TimeLabel=new JLabel();
+		
 		
 		player1TimeLabel.setFont(new Font("ARIAL", Font.BOLD, 24));
 		//playerTimeLabel.setText(Stopwatch.getTimeString());
@@ -166,20 +169,7 @@ public class Board implements MouseListener
 				endingY+10, 100, 100);
 		player2TimeLabel.setVisible(true);
 		
-		//Stopwatch s2=new Stopwatch("p2");
-		
 		board.add(player2TimeLabel);
-		
-		
-		
-		if(getTurn()%2==1)
-		{
-			s1.t.start();
-		}
-		else if(getTurn()%2==0)
-		{
-			s2.t.start();
-		}
 	}
 	
 	public static void updateTime(String player, String time)
