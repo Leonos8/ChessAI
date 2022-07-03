@@ -14,9 +14,18 @@ public class Rook
 	
 	static Image rookImage;
 	
-	public Rook()
+	int startingCol;
+	int startingRow;
+	
+	public Rook(int col, int row)
 	{
-		
+		this.startingCol=col;
+		this.startingRow=row;
+	}
+	
+	public String getStartingPosition()
+	{
+		return Tile.positionToString(startingCol, startingRow);
 	}
 	
 	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 

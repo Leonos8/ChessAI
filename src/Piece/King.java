@@ -14,9 +14,18 @@ public class King
 	
 	static Image kingImage;
 	
-	public King()
+	int startingCol;
+	int startingRow;
+	
+	public King(int col, int row)
 	{
-		
+		this.startingCol=col;
+		this.startingRow=row;
+	}
+	
+	public String getStartingPosition()
+	{
+		return Tile.positionToString(startingCol, startingRow);
 	}
 	
 	public static boolean isLegalMove(Tile[][] tile, int curCol, int curRow, 
@@ -66,7 +75,7 @@ public class King
 					&& !tile[curCol][curRow].getPiece().getMoved()
 					&& !tile[curCol+3][curRow].getPiece().getMoved())
 			{
-				Piece.Move(tile, 7, curRow, 5, newRow);
+				Piece.Move(tile, 7, curRow, 5, newRow, false);
 				canCastle=true;
 			}
 		}
@@ -81,7 +90,7 @@ public class King
 					&& !tile[curCol][curRow].getPiece().getMoved()
 					&& !tile[curCol-4][curRow].getPiece().getMoved())
 			{
-				Piece.Move(tile, 0, curRow, 3, newRow);
+				Piece.Move(tile, 0, curRow, 3, newRow, false);
 				canCastle=true;
 			}
 		}

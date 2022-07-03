@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 
 import Piece.Bishop;
 import Piece.EmptyTile;
@@ -50,7 +53,10 @@ public class Board implements MouseListener
 	static JLabel player1TimeLabel=new JLabel();;
 	static JLabel player2TimeLabel;
 	
-	//public static Stopwatch s1=new Stopwatch("p1");
+	static JTextPane capturedPane;
+	static JTextPane movePane;
+	
+	Stopwatch sw=new Stopwatch();
 	
 	public Board()
 	{
@@ -170,6 +176,38 @@ public class Board implements MouseListener
 		player2TimeLabel.setVisible(true);
 		
 		board.add(player2TimeLabel);
+		
+		sw=new Stopwatch();
+		
+		//////////////////////////////////////////////////////////////////////
+		capturedPane=new JTextPane();
+		capturedPane.setEditable(false);
+		capturedPane.setVisible(true);
+		
+		capturedPane.setFont(new Font("Arial", Font.BOLD, 16));
+		capturedPane.setText("\tWHITE\t|     BLACK\n");
+		
+		JScrollPane captureScrollPane=new JScrollPane(capturedPane);
+		captureScrollPane.setBounds(50, startingY, startingX-100, endingY-50);
+		captureScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		captureScrollPane.setVisible(true);
+		
+		board.add(captureScrollPane);
+		
+		//////////////////////////////////////////////////////////////////////
+		movePane=new JTextPane();
+		movePane.setEditable(false);
+		movePane.setVisible(true);
+
+		movePane.setFont(new Font("Arial", Font.BOLD, 16));
+		movePane.setText("\tWHITE\t|     BLACK\n");
+
+		JScrollPane moveScrollPane=new JScrollPane(movePane);
+		moveScrollPane.setBounds(endingX+50, startingY, GUI.frame.getWidth()/2-startingX+25, endingY-50);
+		moveScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		moveScrollPane.setVisible(true);
+
+		board.add(moveScrollPane);
 	}
 	
 	public static void updateTime(String player, String time)
@@ -224,51 +262,51 @@ public class Board implements MouseListener
 			{
 				if(r==1)
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Pawn(), "BLACK"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Pawn(c, r), "BLACK"));
 				}
 				else if(r==6)
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Pawn(), "WHITE"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Pawn(c, r), "WHITE"));
 				}
 				else if(r==0 && (c==0 || c==7))
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Rook(), "BLACK"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Rook(c, r), "BLACK"));
 				}
 				else if(r==0 && (c==1 || c==6))
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Knight(), "BLACK"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Knight(c, r), "BLACK"));
 				}
 				else if(r==0 && (c==2 || c==5))
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Bishop(), "BLACK"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Bishop(c, r), "BLACK"));
 				}
 				else if(r==0 && c==3)
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Queen(), "BLACK"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Queen(c, r), "BLACK"));
 				}
 				else if(r==0 && c==4)
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new King(), "BLACK"));
+					tiles[c][r]=new Tile(c, r, new Piece(new King(c, r), "BLACK"));
 				}	
 				else if(r==7 && (c==0 || c==7))
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Rook(), "WHITE"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Rook(c, r), "WHITE"));
 				}
 				else if(r==7 && (c==1 || c==6))
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Knight(), "WHITE"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Knight(c, r), "WHITE"));
 				}
 				else if(r==7 && (c==2 || c==5))
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Bishop(), "WHITE"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Bishop(c, r), "WHITE"));
 				}
 				else if(r==7 && c==3)
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Queen(), "WHITE"));
+					tiles[c][r]=new Tile(c, r, new Piece(new Queen(c, r), "WHITE"));
 				}
 				else if(r==7 && c==4)
 				{
-					tiles[c][r]=new Tile(c, r, new Piece(new King(), "WHITE"));
+					tiles[c][r]=new Tile(c, r, new Piece(new King(c, r), "WHITE"));
 				}
 				else
 				{
@@ -285,12 +323,34 @@ public class Board implements MouseListener
 		
 		capturedPieces.add(tiles[newCol][newRow].getPiece());
 		
-		Piece.Move(tile, curCol, curRow, newCol, newRow);
-		
-		/*for(int i=0; i<capturedPieces.size(); i++)
+		if(tile[curCol][curRow].getPiece().getColor().equals("WHITE"))
 		{
-			System.out.println(capturedPieces.get(i).getPieceType());
-		}*/
+			if(tile[newCol][newRow].getPiece().getPiece() instanceof Bishop 
+					|| tile[newCol][newRow].getPiece().getPiece() instanceof Knight
+					|| tile[newCol][newRow].getPiece().getPiece() instanceof Queen)
+			{
+				capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].positionToString(newCol, 
+						newRow)+" "+capturedPieces.get(capturedPieces.size()-1)+"\t|");
+			}
+			else
+			{
+				capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].positionToString(newCol, 
+						newRow)+" "+capturedPieces.get(capturedPieces.size()-1)+"\t\t|");
+			}
+			
+		}
+		else if(tiles[curCol][curRow].getPiece().getColor()=="BLACK")
+		{
+			capturedPane.setText(capturedPane.getText()+"\t\t|"
+					+tiles[newCol][newRow].positionToString(newCol, newRow)
+					+" "+capturedPieces.get(capturedPieces.size()-1));
+			
+			
+		}
+		
+		capturedPane.setText(capturedPane.getText()+"\n");
+		
+		Piece.Move(tile, curCol, curRow, newCol, newRow, true);
 	}
 	
 	public static void captureKing(Piece king)
@@ -410,7 +470,7 @@ public class Board implements MouseListener
 						tiles[selectedTile[0]][selectedTile[1]].getPiece().getColor()))
 				{
 					Piece.Move(tiles, selectedTile[0], selectedTile[1], 
-							getCol(e.getX()), getRow(e.getY()));	
+							getCol(e.getX()), getRow(e.getY()), false);	
 				}
 				selectedTile[0]=-1;
 				selectedTile[1]=-1;

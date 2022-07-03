@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 import Graphics.Board;
+import Graphics.Stopwatch;
 import Graphics.Tile;
 
 public class Piece
@@ -66,8 +67,10 @@ public class Piece
 		return false;
 	}
 	
-	public static void Move(Tile[][] tile, int curCol, int curRow, int newCol, int newRow)
+	public static void Move(Tile[][] tile, int curCol, int curRow, int newCol, int newRow,
+			boolean capturedPiece)
 	{
+		System.out.println(capturedPiece);
 		if(!tile[curCol][curRow].getPiece().getMoved())
 		{	
 			tile[curCol][curRow].getPiece().setMoved(true);
@@ -76,12 +79,18 @@ public class Piece
 			
 		EmptyTile.createEmptyTile(tile, curCol, curRow);
 		
-		Board.incTurn();
-		
 		if(Board.getTurn()%2==1)
 		{
-			//Board.s1.resumeClock();
+			Stopwatch.resumeClock("p2");
+			Stopwatch.stopClock("p1");
 		}
+		else if(Board.getTurn()%2==0)
+		{
+			Stopwatch.resumeClock("p1");
+			Stopwatch.stopClock("p2");
+		}
+		
+		Board.incTurn();
 		
 		Board.board.repaint();
 	}

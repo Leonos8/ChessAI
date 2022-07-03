@@ -14,9 +14,18 @@ public class Knight
 	
 	static Image knightImage;
 	
-	public Knight()
+	int startingCol;
+	int startingRow;
+	
+	public Knight(int col, int row)
 	{
-		
+		this.startingCol=col;
+		this.startingRow=row;
+	}
+	
+	public String getStartingPosition()
+	{
+		return Tile.positionToString(startingCol, startingRow);
 	}
 	
 	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 

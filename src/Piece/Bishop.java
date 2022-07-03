@@ -14,9 +14,18 @@ public class Bishop
 	
 	static Image bishopImage;
 	
-	public Bishop()
+	int startingCol;
+	int startingRow;
+	
+	public Bishop(int col, int row)
 	{
-		
+		this.startingCol=col;
+		this.startingRow=row;
+	}
+	
+	public String getStartingPosition()
+	{
+		return Tile.positionToString(startingCol, startingRow);
 	}
 	
 	public static boolean isLegalMove(Tile[][] tile, int curCol, int curRow, 

@@ -14,9 +14,18 @@ public class Queen
 	
 	static Image queenImage;
 	
-	public Queen()
+	int startingCol;
+	int startingRow;
+	
+	public Queen(int col, int row)
 	{
-		
+		this.startingCol=col;
+		this.startingRow=row;
+	}
+	
+	public String getStartingPosition()
+	{
+		return Tile.positionToString(startingCol, startingRow);
 	}
 	
 	public static boolean isLegalMove(Tile[][] tile, int curCol, int curRow, 
