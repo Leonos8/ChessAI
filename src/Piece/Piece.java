@@ -79,6 +79,30 @@ public class Piece
 			
 		EmptyTile.createEmptyTile(tile, curCol, curRow);
 		
+		if(newRow==0)
+		{
+			if(tile[newCol][newRow].getPiece().getPiece() instanceof Pawn)
+			{
+				if(tile[newCol][newRow].getPiece().getColor().equals("WHITE"))
+				{
+					Pawn.pawnPromotion(tile, newCol, newRow);
+				}
+			}
+		}
+		
+		if(newRow==7)
+		{
+			if(tile[newCol][newRow].getPiece().getPiece() instanceof Pawn)
+			{
+				if(tile[newCol][newRow].getPiece().getColor().equals("BLACK"))
+				{
+					Pawn.pawnPromotion(tile, newCol, newRow);
+				}
+			}
+		}
+		
+		
+		
 		if(Board.getTurn()%2==1)
 		{
 			Stopwatch.resumeClock("p2");
@@ -93,6 +117,40 @@ public class Piece
 		Board.incTurn();
 		
 		Board.board.repaint();
+	}
+	
+	public String moveToString(Tile[][] tile, int curCol, int curRow, int newCol, int newRow,
+			boolean capturedPiece) //TODO will get back to
+	{
+		String moveString="";
+		
+		if(!capturedPiece)
+		{
+			if(tile[curCol][curRow].getPiece().getPiece() instanceof Pawn)
+			{
+				if(tile[curCol][curRow].getPiece().getColor().equals("WHITE"))
+				{
+					if(newRow==0)
+					{
+						//PROMOTE labeled as a8=Q for pawn in a8 to promote to queen
+					}
+				}
+				else if(tile[curCol][curRow].getPiece().getColor().equals("BLACK"))
+				{
+					if(newRow==7)
+					{
+						//PROMOTE labeled as a8=Q for pawn in a8 to promote to queen
+					}
+				}
+				
+				if(moveString.equals(""))
+				{
+					moveString=Tile.positionToString(newCol, newRow);
+				}
+			}
+		}
+		
+		return moveString;
 	}
 	
 	public Image getPieceImage()

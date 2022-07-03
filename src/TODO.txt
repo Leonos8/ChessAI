@@ -1,10 +1,9 @@
-Record moves
 Add a toolbar to the top
 Add AI for 1 player, and make a mode for AI to play itself
 Create levels of difficulty for the AI
 Maybe try and figure out how to add a two-player feature from different computers
 Create a save game feature
-en Passant
+
 
 
 Toolbar can have load game, new game, quit game, settings. etc
@@ -16,3 +15,9 @@ Toolbar can have load game, new game, quit game, settings. etc
 
 
 Create log features and work on optimizing my code, and cleaning it up
+
+
+
+
+Record moves
+en Passant

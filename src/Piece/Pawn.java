@@ -102,6 +102,12 @@ public class Pawn
 		return false;
 	}
 	
+	public static void pawnPromotion(Tile[][] tile ,int newCol, int newRow)
+	{
+		tile[newCol][newRow].setPiece(new Piece(new Queen(newCol, newRow), 
+				tile[newCol][newRow].getPiece().getColor()));
+	}
+	
 	public static void setImageIcon(String clr)
 	{
 		File currDir=new File(".");
