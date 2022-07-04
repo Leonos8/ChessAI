@@ -17,6 +17,11 @@ public class Bishop
 	int startingCol;
 	int startingRow;
 	
+	public Bishop()
+	{
+		
+	}
+	
 	public Bishop(int col, int row)
 	{
 		this.startingCol=col;

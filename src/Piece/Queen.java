@@ -17,6 +17,11 @@ public class Queen
 	int startingCol;
 	int startingRow;
 	
+	public Queen()
+	{
+		
+	}
+	
 	public Queen(int col, int row)
 	{
 		this.startingCol=col;

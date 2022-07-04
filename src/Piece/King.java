@@ -17,6 +17,11 @@ public class King
 	int startingCol;
 	int startingRow;
 	
+	public King()
+	{
+		
+	}
+	
 	public King(int col, int row)
 	{
 		this.startingCol=col;

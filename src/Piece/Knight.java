@@ -17,6 +17,11 @@ public class Knight
 	int startingCol;
 	int startingRow;
 	
+	public Knight()
+	{
+		
+	}
+	
 	public Knight(int col, int row)
 	{
 		this.startingCol=col;

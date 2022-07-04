@@ -17,6 +17,11 @@ public class Rook
 	int startingCol;
 	int startingRow;
 	
+	public Rook()
+	{
+		
+	}
+	
 	public Rook(int col, int row)
 	{
 		this.startingCol=col;

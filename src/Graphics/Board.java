@@ -36,10 +36,10 @@ public class Board implements MouseListener
 	
 	int tileX=80;
 	int tileY=80;
-	int startingX;
-	int startingY;
-	int endingX;
-	int endingY;
+	static int startingX;
+	static int startingY;
+	static int endingX;
+	static int endingY;
 	
 	static int turn=1;
 	
@@ -252,6 +252,26 @@ public class Board implements MouseListener
 	public int getRow(int y)
 	{
 		return (y-startingY)/80;
+	}
+	
+	public static int getStartingX()
+	{
+		return startingX;
+	}
+	
+	public static int getStartingY()
+	{
+		return startingY;
+	}
+	
+	public static int getEndingX()
+	{
+		return endingX;
+	}
+	
+	public static int getEndingY()
+	{
+		return endingY;
 	}
 	
 	public void setupBoard()
