@@ -28,7 +28,6 @@ public class Menu implements ActionListener
 	
 	JTextField player1NameInput=new JTextField();
 	JTextField player2NameInput=new JTextField();
-	JTextField computerNameInput=new JTextField();
 	
 	public Menu()
 	{
@@ -105,13 +104,11 @@ public class Menu implements ActionListener
 		player1Panel.add(playerName);
 		
 		/////////////////////////////////////////////////////////		
-		JTextField playerNameInput=new JTextField();
+		player1NameInput.setFont(new Font("Arial", Font.PLAIN, 24));
+		player1NameInput.setBounds(GUI.frame.getWidth()/2+5, 40, 150, 25);
+		player1NameInput.setVisible(true);
 		
-		playerNameInput.setFont(new Font("Arial", Font.PLAIN, 24));
-		playerNameInput.setBounds(GUI.frame.getWidth()/2+5, 40, 150, 25);
-		playerNameInput.setVisible(true);
-		
-		player1Panel.add(playerNameInput);
+		player1Panel.add(player1NameInput);
 		
 		/////////////////////////////////////////////////////////		
 		JLabel computerName=new JLabel();
@@ -124,11 +121,11 @@ public class Menu implements ActionListener
 		player1Panel.add(computerName);
 
 		/////////////////////////////////////////////////////////		
-		computerNameInput.setFont(new Font("Arial", Font.PLAIN, 24));
-		computerNameInput.setBounds(GUI.frame.getWidth()/2+5, 90, 150, 25);
-		computerNameInput.setVisible(true);
+		player2NameInput.setFont(new Font("Arial", Font.PLAIN, 24));
+		player2NameInput.setBounds(GUI.frame.getWidth()/2+5, 90, 150, 25);
+		player2NameInput.setVisible(true);
 
-		player1Panel.add(computerNameInput);
+		player1Panel.add(player2NameInput);
 		
 		/////////////////////////////////////////////////////////		
 		JLabel difficultyName=new JLabel();
@@ -141,6 +138,15 @@ public class Menu implements ActionListener
 		player1Panel.add(difficultyName);
 		
 		//TODO Add difficult guage for AI, and allow player to choose color
+		
+		/////////////////////////////////////////////////////////		
+		startGameButton.setFont(new Font("Arial", Font.PLAIN, 24));
+		startGameButton.setText("Start");
+		startGameButton.setBounds(GUI.frame.getWidth()-175, 25, 150, 50);
+		startGameButton.addActionListener(this);
+		startGameButton.setVisible(true);
+
+		player1Panel.add(startGameButton);
 	}
 	
 	public void create2PlayerPanel()
@@ -237,7 +243,6 @@ public class Menu implements ActionListener
 	{
 		player1NameInput.setText("");
 		player2NameInput.setText("");
-		computerNameInput.setText("");
 	}
 
 	@Override
@@ -276,15 +281,11 @@ public class Menu implements ActionListener
 		if(e.getSource()==startGameButton)
 		{
 			togglePanelVisibility(false);
-			Board.setPlayer1Text(player1NameInput.getText());
 			
-			if(player2NameInput.getText()==null || player2NameInput.getText().equals(""))
-			{
-				Board.setPlayer2Text(computerNameInput.getText());
-			}
-			else
-				Board.setPlayer2Text(player2NameInput.getText());
-			Board board=new Board();
+			Board.setPlayer1Text(player1NameInput.getText());
+			Board.setPlayer2Text(player2NameInput.getText());
+			
+			new Board();
 			
 			eraseLabelText();
 		}

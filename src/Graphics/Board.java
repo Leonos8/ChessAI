@@ -8,11 +8,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 
 import Piece.Bishop;
@@ -208,6 +209,19 @@ public class Board implements MouseListener
 		moveScrollPane.setVisible(true);
 
 		board.add(moveScrollPane);
+		
+		//////////////////////////////////////////////////////////////////////
+		/*JToolBar tb=new JToolBar();
+		
+		tb.setRollover(true);
+		
+		JButton menuButton=new JButton();
+		tb.add(menuButton);
+		tb.addSeparator();
+		tb.setLocation(0, 0);
+		
+		tb.add(board);
+		GUI.frame.getContentPane().add(tb);*/
 	}
 	
 	public static void updateTime(String player, String time)
