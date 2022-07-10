@@ -7,25 +7,56 @@ import javax.swing.ImageIcon;
 
 import Graphics.Board;
 import Graphics.Tile;
+import Piece.Piece.Color;
+import Piece.Piece.Type;
 
-public class Knight 
+public class Knight
+       extends Piece
 {
-	static ImageIcon knightIcon;
+	public static final ImageIcon WHITE_ICON=new ImageIcon(imagePath+"whiteKnight.png");
+	public static final ImageIcon BLACK_ICON=new ImageIcon(imagePath+"blackKnight.png");
 	
-	static Image knightImage;
-	
+	public static final Image WHITE_IMAGE=WHITE_ICON.getImage();
+	public static final Image BLACK_IMAGE=BLACK_ICON.getImage();
+
 	int startingCol;
 	int startingRow;
 	
-	public Knight()
-	{
-		
-	}
+	int col;
+	int row;
 	
-	public Knight(int col, int row)
+	Board board;
+	
+	public Knight(Board board, Piece.Color color, int col, int row)
 	{
+		this.board=board;
+		this.color=color;
 		this.startingCol=col;
 		this.startingRow=row;
+		this.pieceType=Type.Knoght;
+		this.icon=(color==Color.White ? WHITE_ICON : BLACK_ICON);
+		this.image=this.icon.getImage();
+		
+		this.setPosition(col, row);
+	}
+	
+	@Override
+	public void setPosition(int col, int row) 
+	{
+		this.col=col;
+		this.row=row;
+	}
+
+	@Override
+	public int getCol() 
+	{
+		return col;
+	}
+
+	@Override
+	public int getRow() 
+	{
+		return row;
 	}
 	
 	public String getStartingPosition()
@@ -33,9 +64,9 @@ public class Knight
 		return Tile.positionToString(startingCol, startingRow);
 	}
 	
-	public static boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, 
-			int newCol, int newRow, String color)
+	public boolean isLegalMove(Tile[][] tile ,int curCol, int curRow, int newCol, int newRow, Color color)
 	{
+		Piece piece=tile[newCol][newRow].getPiece();
 		if(((newRow==curRow+2 || newRow==curRow-2) 
 				&& (newCol==curCol+1 || newCol==curCol-1))
 				|| ((newRow==curRow+1 || newRow==curRow-1) 
@@ -47,44 +78,18 @@ public class Knight
 			}
 
 			if(tile[newCol][newRow].containsPiece() 
-					&& !(tile[newCol][newRow].getPiece().getColor().equals(color)))
+					&& !(piece.getColor().equals(color)))
 			{
-				if(tile[newCol][newRow].getPiece().getPiece() instanceof King)
+				if(piece.getPiece() instanceof King)
 				{
-						Board.captureKing(tile[newCol][newRow].getPiece());
+						Board.captureKing(piece);
 				}
 					
-				Board.capturePiece(tile, curCol, curRow, newCol, newRow);
+				board.capturePiece(tile, curCol, curRow, newCol, newRow);
 			}
 		}
 		
 		return false;
-	}
-	
-	public static void setImageIcon(String clr)
-	{
-		File currDir=new File(".");
-		
-		String path=currDir.getAbsolutePath();
-		path=path.substring(0, path.length()-2);	
-		
-		String imagePath=path+File.separator+"PieceSprites"+File.separator;
-		
-		if(clr.equals("BLACK"))
-		{
-			knightIcon=new ImageIcon(imagePath+"blackKnight.png");
-		}
-		else
-			knightIcon=new ImageIcon(imagePath+"whiteKnight.png");
-		
-		knightImage=knightIcon.getImage();
-	}
-	
-	public static Image getImage(String color)
-	{
-		setImageIcon(color);
-		
-		return knightImage;
 	}
 	
 	public String toString()

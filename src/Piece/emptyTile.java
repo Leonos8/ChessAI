@@ -1,17 +1,57 @@
 package Piece;
 
+import Graphics.Board;
 import Graphics.Tile;
+import Piece.Piece.Type;
 
-public class EmptyTile 
+public class EmptyTile extends Piece
 {
-	public EmptyTile()
+	int startingCol;
+	int startingRow;
+	
+	int col;
+	int row;
+	
+	static Board board;
+
+	public EmptyTile(Board board, Piece.Color color, int col, int row)
 	{
-		
+		this.board=board;
+		this.color=color;
+		this.startingCol=col;
+		this.startingRow=row;
+		this.pieceType=Type.Empty;
+
 	}
 	
-	public static void createEmptyTile(Tile[][] tiles, int c, int r)
+	public static void createEmptyTile(Tile[][] tiles, int c, int r) //TODO
 	{
-		tiles[c][r]=new Tile(c, r, new Piece(new EmptyTile(), "NEUTRAL"));
+		tiles[c][r]=new Tile(c, r, new EmptyTile(board, Piece.Color.Neutral, c, r));
+	}
+	
+	@Override
+	public void setPosition(int col, int row) 
+	{
+		this.col=col;
+		this.row=row;
+	}
+
+	@Override
+	public int getCol() 
+	{
+		return col;
+	}
+
+	@Override
+	public int getRow() 
+	{
+		return row;
+	}
+
+	@Override
+	public boolean isLegalMove(Tile[][] tile, int curCol, int curRow, int newCol, int newRow, Color color)
+	{
+		return false;
 	}
 	
 	public String toString()

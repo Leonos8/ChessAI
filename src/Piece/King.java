@@ -7,64 +7,60 @@ import javax.swing.ImageIcon;
 
 import Graphics.Board;
 import Graphics.Tile;
+import Piece.Piece.Color;
+import Piece.Piece.Type;
 
-public class King 
+public class King
+extends Piece
 {
-	static ImageIcon kingIcon;
-	
-	static Image kingImage;
+	public static final ImageIcon WHITE_ICON=new ImageIcon(imagePath+"whiteKing.png");
+	public static final ImageIcon BLACK_ICON=new ImageIcon(imagePath+"blackKing.png");
+	public static final Image WHITE_IMAGE=WHITE_ICON.getImage();
+	public static final Image BLACK_IMAGE=BLACK_ICON.getImage();
 	
 	int startingCol;
 	int startingRow;
 	
-	public King()
-	{
-		
-	}
+	int col;
+	int row;
 	
-	public King(int col, int row)
+	Board board;
+	
+	public King(Board board, Piece.Color color, int col, int row)
 	{
+		this.board=board;
+		this.color=color;
 		this.startingCol=col;
 		this.startingRow=row;
+		this.pieceType=Type.King;
+		this.icon=(color==Color.White ? WHITE_ICON : BLACK_ICON);
+		this.image=this.icon.getImage();
+		
+		this.setPosition(col, row);
+	}
+	
+	@Override
+	public void setPosition(int col, int row) 
+	{
+		this.col=col;
+		this.row=row;
+	}
+
+	@Override
+	public int getCol() 
+	{
+		return col;
+	}
+
+	@Override
+	public int getRow() 
+	{
+		return row;
 	}
 	
 	public String getStartingPosition()
 	{
 		return Tile.positionToString(startingCol, startingRow);
-	}
-	
-	public static boolean isLegalMove(Tile[][] tile, int curCol, int curRow, 
-			int newCol, int newRow, String color)
-	{
-		if((newCol==curCol-1 && newRow==curRow) 
-				|| (newCol==curCol+1 && newRow==curRow)
-				|| (newCol==curCol && newRow==curRow-1) 
-				|| (newCol==curCol && newRow==curRow+1)
-				|| (Math.abs(curCol-newCol)==Math.abs(curRow-newRow) 
-				&& Math.abs(curCol-newCol)==1))
-		{
-			if(!tile[newCol][newRow].containsPiece())
-			{
-				return true;
-			}
-			
-			if(tile[newCol][newRow].containsPiece() 
-					&& !(tile[newCol][newRow].getPiece().getColor().equals(color)))
-			{
-				if(tile[newCol][newRow].getPiece().getPiece() instanceof King)
-				{
-						Board.captureKing(tile[newCol][newRow].getPiece());
-				}
-					
-				Board.capturePiece(tile, curCol, curRow, newCol, newRow);
-			}
-		}
-		if(isCastling(tile, curCol, curRow, newCol, newRow))
-		{
-			return true;
-		}
-	
-		return false;
 	}
 	
 	public static boolean isCastling(Tile[][] tile ,int curCol, int curRow, 
@@ -80,7 +76,7 @@ public class King
 					&& !tile[curCol][curRow].getPiece().getMoved()
 					&& !tile[curCol+3][curRow].getPiece().getMoved())
 			{
-				Piece.Move(tile, 7, curRow, 5, newRow, false);
+				Move.movePiece(tile, 7, curRow, 5, newRow);
 				canCastle=true;
 			}
 		}
@@ -95,7 +91,7 @@ public class King
 					&& !tile[curCol][curRow].getPiece().getMoved()
 					&& !tile[curCol-4][curRow].getPiece().getMoved())
 			{
-				Piece.Move(tile, 0, curRow, 3, newRow, false);
+				Move.movePiece(tile, 0, curRow, 3, newRow);
 				canCastle=true;
 			}
 		}
@@ -103,30 +99,40 @@ public class King
 		return canCastle;
 	}
 	
-	public static void setImageIcon(String clr)
+	public boolean isLegalMove(Tile[][] tile, int curCol, int curRow, 
+			int newCol, int newRow, Color color)
 	{
-		File currDir=new File(".");
+		Piece piece=tile[newCol][newRow].getPiece();
 		
-		String path=currDir.getAbsolutePath();
-		path=path.substring(0, path.length()-2);	
-		
-		String imagePath=path+File.separator+"PieceSprites"+File.separator;
-		
-		if(clr.equals("BLACK"))
+		if((newCol==curCol-1 && newRow==curRow) 
+				|| (newCol==curCol+1 && newRow==curRow)
+				|| (newCol==curCol && newRow==curRow-1) 
+				|| (newCol==curCol && newRow==curRow+1)
+				|| (Math.abs(curCol-newCol)==Math.abs(curRow-newRow) 
+				&& Math.abs(curCol-newCol)==1))
 		{
-			kingIcon=new ImageIcon(imagePath+"blackKing.png");
+			if(!tile[newCol][newRow].containsPiece())
+			{
+				return true;
+			}
+			
+			if(tile[newCol][newRow].containsPiece() 
+					&& !(piece.getColor().equals(color)))
+			{
+				if(piece.getPiece() instanceof King)
+				{
+						Board.captureKing(piece);
+				}
+					
+				board.capturePiece(tile, curCol, curRow, newCol, newRow);
+			}
 		}
-		else
-			kingIcon=new ImageIcon(imagePath+"whiteKing.png");
-		
-		kingImage=kingIcon.getImage();
-	}
+		if(isCastling(tile, curCol, curRow, newCol, newRow))
+		{
+			return true;
+		}
 	
-	public static Image getImage(String color)
-	{
-		setImageIcon(color);
-		
-		return kingImage;
+		return false;
 	}
 	
 	public String toString()

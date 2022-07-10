@@ -8,18 +8,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 
+import AI.AI;
 import Piece.Bishop;
 import Piece.EmptyTile;
 import Piece.King;
 import Piece.Knight;
+import Piece.Move;
 import Piece.Pawn;
 import Piece.Piece;
 import Piece.Queen;
@@ -31,7 +31,8 @@ public class Board implements MouseListener
 	
 	static Tile[][] tiles=new Tile[8][8];
 	
-	static ArrayList<Piece> capturedPieces=new ArrayList<Piece>();
+    ArrayList<Piece> capturedPieces=new ArrayList<Piece>();
+	static ArrayList<Piece> piecesOnBoard=new ArrayList<Piece>();
 	
 	int[] selectedTile=new int[] {-1, -1};
 	
@@ -43,6 +44,7 @@ public class Board implements MouseListener
 	static int endingY;
 	
 	static int turn=1;
+	static int numOfPlayers;
 	
 	static String player1Name="";
 	static String player2Name="";
@@ -58,6 +60,8 @@ public class Board implements MouseListener
 	static JTextPane movePane;
 	
 	Stopwatch sw=new Stopwatch();
+	
+	public static AI ai;
 	
 	public Board()
 	{
@@ -211,7 +215,7 @@ public class Board implements MouseListener
 		board.add(moveScrollPane);
 		
 		//////////////////////////////////////////////////////////////////////
-		/*JToolBar tb=new JToolBar();
+		/*JToolBar tb=new JToolBar(); USE JMenuBar not JToolBar
 		
 		tb.setRollover(true);
 		
@@ -222,142 +226,33 @@ public class Board implements MouseListener
 		
 		tb.add(board);
 		GUI.frame.getContentPane().add(tb);*/
-	}
-	
-	public static void updateTime(String player, String time)
-	{
-		if(player.equals("p1"))
-		{
-			player1TimeLabel.setText(time);
-		}
-		else if(player.equals("p2"))
-		{
-			player2TimeLabel.setText(time);
-		}
-	}
-	
-	public void drawPieces(Graphics g)
-	{
-		Graphics2D g2d=(Graphics2D) g;
 		
-		for(int c=0; c<8; c++)
+		if(getNumOfPlayers()==1)
 		{
-			for(int r=0; r<8; r++)
-			{
-				g2d.drawImage(tiles[c][r].getPiece().getPieceImage(), startingX-20+(c*80), 
-						startingY-20+(r*80), board);
-			}
+			ai=new AI();
+			
+			ai.setBoard(this);
+			
+			ai.start();
 		}
 	}
 	
-	public void highlightTile(Graphics g)
-	{
-		Color highlight=new Color(1, 1, 0, .3F);
-		g.setColor(highlight);
-		
-		g.fillRect(startingX+(selectedTile[0]*80), startingY+(selectedTile[1]*80), 80, 80);
-	}
-	
-	public int getCol(int x)
-	{
-		return (x-startingX)/80;
-	}
-	
-	public int getRow(int y)
-	{
-		return (y-startingY)/80;
-	}
-	
-	public static int getStartingX()
-	{
-		return startingX;
-	}
-	
-	public static int getStartingY()
-	{
-		return startingY;
-	}
-	
-	public static int getEndingX()
-	{
-		return endingX;
-	}
-	
-	public static int getEndingY()
-	{
-		return endingY;
-	}
-	
-	public void setupBoard()
-	{
-		for(int c=0; c<8; c++)
-		{
-			for(int r=0; r<8; r++)
-			{
-				if(r==1)
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Pawn(c, r), "BLACK"));
-				}
-				else if(r==6)
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Pawn(c, r), "WHITE"));
-				}
-				else if(r==0 && (c==0 || c==7))
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Rook(c, r), "BLACK"));
-				}
-				else if(r==0 && (c==1 || c==6))
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Knight(c, r), "BLACK"));
-				}
-				else if(r==0 && (c==2 || c==5))
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Bishop(c, r), "BLACK"));
-				}
-				else if(r==0 && c==3)
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Queen(c, r), "BLACK"));
-				}
-				else if(r==0 && c==4)
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new King(c, r), "BLACK"));
-				}	
-				else if(r==7 && (c==0 || c==7))
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Rook(c, r), "WHITE"));
-				}
-				else if(r==7 && (c==1 || c==6))
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Knight(c, r), "WHITE"));
-				}
-				else if(r==7 && (c==2 || c==5))
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Bishop(c, r), "WHITE"));
-				}
-				else if(r==7 && c==3)
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new Queen(c, r), "WHITE"));
-				}
-				else if(r==7 && c==4)
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new King(c, r), "WHITE"));
-				}
-				else
-				{
-					tiles[c][r]=new Tile(c, r, new Piece(new EmptyTile(), "NEUTRAL"));
-				}
-			}
-		}
-	}
-	
-	public static void capturePiece(Tile[][] tile, int curCol, int curRow, 
+	public void capturePiece(Tile[][] tile, int curCol, int curRow, 
 			int newCol, int newRow)
 	{
 		tiles=tile;
 		
 		capturedPieces.add(tiles[newCol][newRow].getPiece());
 		
-		if(tile[curCol][curRow].getPiece().getColor().equals("WHITE"))
+		for(int i=0; i<piecesOnBoard.size(); i++)
+		{
+			if(piecesOnBoard.get(i).getCol()==newCol && piecesOnBoard.get(i).getRow()==newRow)
+			{
+				piecesOnBoard.remove(i);
+			}
+		}
+		
+		if(tile[curCol][curRow].getPiece().getColor().equals(Piece.Color.White))
 		{
 			if(tile[newCol][newRow].getPiece().getPiece() instanceof Bishop 
 					|| tile[newCol][newRow].getPiece().getPiece() instanceof Knight
@@ -373,7 +268,7 @@ public class Board implements MouseListener
 			}
 			
 		}
-		else if(tiles[curCol][curRow].getPiece().getColor()=="BLACK")
+		else if(tiles[curCol][curRow].getPiece().getColor().equals(Piece.Color.Black))
 		{
 			capturedPane.setText(capturedPane.getText()+"\t\t|"
 					+tiles[newCol][newRow].positionToString(newCol, newRow)
@@ -384,7 +279,7 @@ public class Board implements MouseListener
 		
 		capturedPane.setText(capturedPane.getText()+"\n");
 		
-		Piece.Move(tile, curCol, curRow, newCol, newRow, true);
+		Move.movePiece(tile, curCol, curRow, newCol, newRow);
 	}
 	
 	public static void captureKing(Piece king)
@@ -420,6 +315,65 @@ public class Board implements MouseListener
 			board.add(numberLabels[i]);
 		}
 	}
+
+	public void drawPieces(Graphics g)
+	{
+		Graphics2D g2d=(Graphics2D) g;
+		
+		for(int c=0; c<8; c++)
+		{
+			for(int r=0; r<8; r++)
+			{
+				g2d.drawImage(tiles[c][r].getPiece().getImage(), startingX-20+(c*80), 
+						startingY-20+(r*80), board); 
+			}
+		}
+	}
+	
+	public int getCol(int x)
+	{
+		return (x-startingX)/80;
+	}
+	
+	public int getRow(int y)
+	{
+		return (y-startingY)/80;
+	}
+	
+	public static int getStartingX()
+	{
+		return startingX;
+	}
+	
+	public static int getStartingY()
+	{
+		return startingY;
+	}
+	
+	public static int getEndingX()
+	{
+		return endingX;
+	}
+	
+	public static int getEndingY()
+	{
+		return endingY;
+	}
+	
+	public static int getTurn()
+	{
+		return turn;
+	}
+	
+	public static void incTurn()
+	{
+		turn++;
+	}
+	
+	public static ArrayList<Piece> getPiecesOnBoard()
+	{
+		return piecesOnBoard;
+	}
 	
 	public static void setPlayer1Text(String text)
 	{
@@ -441,15 +395,110 @@ public class Board implements MouseListener
 		return player2Name;
 	}
 	
-	public static void incTurn()
+	public static void setNumOfPlayers(int num)
 	{
-		turn++;
+		numOfPlayers=num;
 	}
 	
-	public static int getTurn()
+	public static int getNumOfPlayers()
 	{
-		return turn;
+		return numOfPlayers;
 	}
+	
+	public void highlightTile(Graphics g)
+	{
+		Color highlight=new Color(1, 1, 0, .3F);
+		g.setColor(highlight);
+		
+		g.fillRect(startingX+(selectedTile[0]*80), startingY+(selectedTile[1]*80), 80, 80);
+	}
+	
+	
+	public void setupBoard()
+	{
+		for(int c=0; c<8; c++)
+		{
+			for(int r=0; r<8; r++)
+			{
+				if(r==1)
+				{
+					tiles[c][r]=new Tile(c, r, new Pawn(this, Piece.Color.Black, c, r));
+				}
+				else if(r==6)
+				{
+					tiles[c][r]=new Tile(c, r, new Pawn(this, Piece.Color.White, c, r));
+				}
+				else if(r==0 && (c==0 || c==7))
+				{
+					tiles[c][r]=new Tile(c, r, new Rook(this, Piece.Color.Black, c, r));
+				}
+				else if(r==0 && (c==1 || c==6))
+				{
+					tiles[c][r]=new Tile(c, r, new Knight(this, Piece.Color.Black, c, r));
+				}
+				else if(r==0 && (c==2 || c==5))
+				{
+					tiles[c][r]=new Tile(c, r, new Bishop(this, Piece.Color.Black, c, r));
+				}
+				else if(r==0 && c==3)
+				{
+					tiles[c][r]=new Tile(c, r, new Queen(this, Piece.Color.Black, c, r));
+				}
+				else if(r==0 && c==4)
+				{
+					tiles[c][r]=new Tile(c, r, new King(this, Piece.Color.Black, c, r));
+				}	
+				else if(r==7 && (c==0 || c==7))
+				{
+					tiles[c][r]=new Tile(c, r, new Rook(this, Piece.Color.White, c, r));
+				}
+				else if(r==7 && (c==1 || c==6))
+				{
+					tiles[c][r]=new Tile(c, r, new Knight(this, Piece.Color.White, c, r));
+				}
+				else if(r==7 && (c==2 || c==5))
+				{
+					tiles[c][r]=new Tile(c, r, new Bishop(this, Piece.Color.White, c, r));
+				}
+				else if(r==7 && c==3)
+				{
+					tiles[c][r]=new Tile(c, r, new Queen(this, Piece.Color.White, c, r));
+				}
+				else if(r==7 && c==4)
+				{
+					tiles[c][r]=new Tile(c, r, new King(this, Piece.Color.White, c, r));
+				}
+				else
+				{
+					tiles[c][r]=new Tile(c, r, new EmptyTile(this, Piece.Color.Neutral, c, r));
+				}
+				
+				if(tiles[c][r].containsPiece())
+				{
+					piecesOnBoard.add(tiles[c][r].getPiece());
+				}
+			}
+		}
+	}
+	
+	public static void updatePiecesOnBoard()
+	{
+		
+	}
+	
+	public static void updateTime(String player, String time)
+	{
+		if(player.equals("p1"))
+		{
+			player1TimeLabel.setText(time);
+		}
+		else if(player.equals("p2"))
+		{
+			player2TimeLabel.setText(time);
+		}
+	}
+	
+	
 
 	@Override
 	public void mouseClicked(MouseEvent e) 
@@ -480,7 +529,7 @@ public class Board implements MouseListener
 				{
 					if(getTurn()%2==1)
 					{
-						if(tiles[col][row].getPiece().getColor()=="WHITE")
+						if(tiles[col][row].getPiece().getColor().equals(Piece.Color.White))
 						{
 							selectedTile[0]=col;
 							selectedTile[1]=row;
@@ -489,7 +538,7 @@ public class Board implements MouseListener
 					
 					if(getTurn()%2==0)
 					{
-						if(tiles[col][row].getPiece().getColor()=="BLACK")
+						if(tiles[col][row].getPiece().getColor().equals(Piece.Color.Black))
 						{
 							selectedTile[0]=col;
 							selectedTile[1]=row;
@@ -499,12 +548,12 @@ public class Board implements MouseListener
 			}
 			else
 			{
-				if(tiles[col][row].getPiece().pieceIsLegalMove(tiles, selectedTile[0], 
-						selectedTile[1], getCol(e.getX()), getRow(e.getY()),
+				if(tiles[selectedTile[0]][selectedTile[1]].getPiece().
+						isLegalMove(tiles, selectedTile[0], selectedTile[1], col, row,
 						tiles[selectedTile[0]][selectedTile[1]].getPiece().getColor()))
 				{
-					Piece.Move(tiles, selectedTile[0], selectedTile[1], 
-							getCol(e.getX()), getRow(e.getY()), false);	
+					Move.movePiece(tiles, selectedTile[0], selectedTile[1], 
+							getCol(e.getX()), getRow(e.getY()));	
 				}
 				selectedTile[0]=-1;
 				selectedTile[1]=-1;

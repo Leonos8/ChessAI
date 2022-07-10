@@ -81,19 +81,6 @@ public class Stopwatch implements Runnable
 		}
     }
 	
-	public void updateTimeLabel(String player, String timeString)
-	{
-		if(player.equals("p1"))
-		{
-			Board.player1TimeLabel.setText(timeString);
-		}
-		
-		if(player.equals("p2"))
-		{
-			Board.player2TimeLabel.setText(timeString);
-		}
-	}
-	
 	public static void stopClock(String player)
 	{
 		if(player.equals("p1"))
@@ -108,6 +95,19 @@ public class Stopwatch implements Runnable
 		//System.out.println(elapsed_time);
 	}
 	
+	public void updateTimeLabel(String player, String timeString)
+	{
+		if(player.equals("p1"))
+		{
+			Board.player1TimeLabel.setText(timeString);
+		}
+		
+		if(player.equals("p2"))
+		{
+			Board.player2TimeLabel.setText(timeString);
+		}
+	}
+	
 	public static void resumeClock(String player)
 	{
 		if(player.equals("p1"))
@@ -118,13 +118,6 @@ public class Stopwatch implements Runnable
 		{
 			t02=(new Date().getTime())-elapsedTime2;
 		}
-	}
-	
-	public static void updateTime(String time)
-	{
-		//System.out.println("UPDATE   "+time);
-		//label.setText(time);
-		//label.repaint();
 	}
 	
 	public static String minToString(int min)

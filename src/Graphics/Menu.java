@@ -147,6 +147,8 @@ public class Menu implements ActionListener
 		startGameButton.setVisible(true);
 
 		player1Panel.add(startGameButton);
+		
+		Board.setNumOfPlayers(1);
 	}
 	
 	public void create2PlayerPanel()
@@ -212,6 +214,8 @@ public class Menu implements ActionListener
 		startGameButton.setVisible(true);
 		
 		player2Panel.add(startGameButton);
+		
+		Board.setNumOfPlayers(2);
 	}
 	
 	public void createTrainingPanel()
@@ -224,6 +228,17 @@ public class Menu implements ActionListener
 		
 	}
 	
+	public void eraseLabelText()
+	{
+		player1NameInput.setText("");
+		player2NameInput.setText("");
+	}
+	
+	public void toggleBackButtonVisibility(boolean visible)
+	{
+		backButton.setVisible(visible);
+	}
+	
 	public void togglePanelVisibility(boolean visible)
 	{
 		menu.setVisible(visible);
@@ -232,17 +247,6 @@ public class Menu implements ActionListener
 		player2Panel.setVisible(visible);
 		trainingPanel.setVisible(visible);
 		settingsPanel.setVisible(visible);
-	}
-	
-	public void toggleBackButtonVisibility(boolean visible)
-	{
-		backButton.setVisible(visible);
-	}
-	
-	public void eraseLabelText()
-	{
-		player1NameInput.setText("");
-		player2NameInput.setText("");
 	}
 
 	@Override

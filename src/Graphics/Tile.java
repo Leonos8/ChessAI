@@ -17,16 +17,9 @@ public class Tile
 		this.piece=piece;
 	}
 	
-	public Tile(int col, int row, Tile tile)
-	{
-		this.col=col;
-		this.row=row;
-		this.piece=piece;
-	}
-	
 	public boolean containsPiece()
 	{
-		if(piece!=null && !(piece.getPiece() instanceof EmptyTile))
+		if(piece!=null && !(piece.getPiece().toString().equals("Empty")))
 		{
 			return true;
 		}
