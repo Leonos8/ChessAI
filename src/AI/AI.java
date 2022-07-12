@@ -94,9 +94,11 @@ public class AI extends Thread
 		}
 		if(winningIndex!=-1)
 		{
-			Move.movePiece(tile, aiMoves.get(winningIndex).getPiece().getCol(), 
+			Board.captureKing(tile[aiMoves.get(winningIndex).getCol()]
+					[aiMoves.get(winningIndex).getRow()].getPiece());
+			/*Move.movePiece(tile, aiMoves.get(winningIndex).getPiece().getCol(), 
 				aiMoves.get(winningIndex).getPiece().getRow(), 
-				aiMoves.get(winningIndex).getCol(), aiMoves.get(winningIndex).getRow());
+				aiMoves.get(winningIndex).getCol(), aiMoves.get(winningIndex).getRow());*/
 			//TODO Change into captureKing
 		}
 		else

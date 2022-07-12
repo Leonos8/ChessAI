@@ -14,22 +14,22 @@ import Piece.Piece.Color;
 public abstract class Piece
 {
 	public static enum Color
-	  {
+	{
 		Neutral,
 		White,
 		Black
-	  };
+	};
 
     public static enum Type
-		  {
-    		Empty,
-		    Pawn,
-			Rook,
-			Knight,
-			Bishop,
-			Queen,
-			King
-		  };
+    {
+    	Empty,
+    	Pawn,
+		Rook,
+		Knight,
+		Bishop,
+		Queen,
+		King
+    };
 
     public static final File currDir=new File(".");
 	public static final String absolutePath=currDir.getAbsolutePath();
