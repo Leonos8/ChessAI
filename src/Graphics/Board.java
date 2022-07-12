@@ -282,7 +282,7 @@ public class Board implements MouseListener
 		if(getNumOfPlayers()==1 && getTurn()%2==1)
 		{
 			System.out.println("RUN");
-			Board.ai.findNextMove(tiles, Board.getPiecesOnBoard());
+			Board.ai.findNextMove(tiles, Board.getPiecesOnBoard());//Creates an infinite recursion?
 		}
 		
 		Move.movePiece(tile, curCol, curRow, newCol, newRow);

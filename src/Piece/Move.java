@@ -42,6 +42,8 @@ public class Move
 		//AI can attack a piece, it moves two turns
 		
 		Piece piece=tile[curCol][curRow].getPiece();
+		System.out.println(moveToString(tile, curCol, curRow, newCol, newRow, 
+				tile[newCol][newRow].containsPiece()));
 
 		if(!piece.getMoved())
 		{	
@@ -91,6 +93,118 @@ public class Move
 		
 		Board.board.repaint();
 	}
+	
+	public static String moveToString(Tile[][] tile, int curCol, int curRow, int newCol, int newRow,
+			boolean capturedPiece)
+	{
+		String moveString="";
+		
+		if(tile[curCol][curRow].getPieceString().equals("PAWN"))
+		{
+			if(capturedPiece)
+			{
+				moveString+=Tile.positionToString(curCol, curRow).charAt(0);
+				moveString+="x";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			else
+			{
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			/*
+			 * PawnPromotion as well
+			 * if(enPassant)
+			 * {
+			 * 		moveString+="e.p";
+			 * }
+			 */
+		}
+		else if(tile[curCol][curRow].getPieceString().equals("KNIGHT"))
+		{
+			if(capturedPiece)
+			{
+				moveString+="N";
+				moveString+="x";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			else
+			{
+				moveString+="N";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+		}
+		else if(tile[curCol][curRow].getPieceString().equals("BISHOP"))
+		{
+			if(capturedPiece)
+			{
+				moveString+="B";
+				moveString+="x";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			else
+			{
+				moveString+="B";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+		}
+		else if(tile[curCol][curRow].getPieceString().equals("ROOK"))
+		{
+			if(capturedPiece)
+			{
+				moveString+="R";
+				moveString+="x";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			else
+			{
+				moveString+="R";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+		}
+		else if(tile[curCol][curRow].getPieceString().equals("QUEEN"))
+		{
+			if(capturedPiece)
+			{
+				moveString+="Q";
+				moveString+="x";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			else
+			{
+				moveString+="Q";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+		}
+		else if(tile[curCol][curRow].getPieceString().equals("KING"))
+		{
+			if(capturedPiece)
+			{
+				moveString+="K";
+				moveString+="x";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			else
+			{
+				moveString+="K";
+				moveString+=Tile.positionToString(newCol, newRow);
+			}
+			
+			//Add castling
+		}
+		
+		return moveString;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*public String moveToString(Tile[][] tile, int curCol, int curRow, int newCol, int newRow,
 			boolean capturedPiece) //TODO will get back to
