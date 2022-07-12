@@ -42,8 +42,10 @@ public class Move
 		//AI can attack a piece, it moves two turns
 		
 		Piece piece=tile[curCol][curRow].getPiece();
-		System.out.println(moveToString(tile, curCol, curRow, newCol, newRow, 
+		Board.updateMovePanel(moveToString(tile, curCol, curRow, newCol, newRow, 
 				tile[newCol][newRow].containsPiece()));
+		//System.out.println(moveToString(tile, curCol, curRow, newCol, newRow, 
+				//tile[newCol][newRow].containsPiece()));
 
 		if(!piece.getMoved())
 		{	
