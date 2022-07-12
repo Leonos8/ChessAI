@@ -21,6 +21,8 @@ extends Piece
 	int startingCol;
 	int startingRow;
 	
+	final int pointValue=-1;
+	
 	int col;
 	int row;
 	
@@ -58,6 +60,11 @@ extends Piece
 		return row;
 	}
 	
+	public int getPoints()
+	{
+		return pointValue;
+	}
+	
 	public String getStartingPosition()
 	{
 		return Tile.positionToString(startingCol, startingRow);
@@ -72,7 +79,7 @@ extends Piece
 		{
 			if(!tile[curCol+1][curRow].containsPiece() 
 					&& !tile[curCol+2][curRow].containsPiece()
-					&& tile[curCol+3][curRow].getPiece().getPiece() instanceof Rook
+					&& tile[curCol+3][curRow].getPieceString().equals("ROOK")
 					&& !tile[curCol][curRow].getPiece().getMoved()
 					&& !tile[curCol+3][curRow].getPiece().getMoved())
 			{
@@ -83,11 +90,10 @@ extends Piece
 		
 		if(newCol<curCol && newCol==curCol-2)
 		{
-			System.out.println(tile[curCol+1][curRow].getPiece());
 			if(!tile[curCol-1][curRow].containsPiece() 
 					&& !tile[curCol-2][curRow].containsPiece()
 					&& !tile[curCol-3][curRow].containsPiece()
-					&& tile[curCol-4][curRow].getPiece().getPiece() instanceof Rook
+					&& tile[curCol+3][curRow].getPieceString().equals("ROOK")
 					&& !tile[curCol][curRow].getPiece().getMoved()
 					&& !tile[curCol-4][curRow].getPiece().getMoved())
 			{

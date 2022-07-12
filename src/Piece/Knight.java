@@ -22,6 +22,8 @@ public class Knight
 	int startingCol;
 	int startingRow;
 	
+	final int pointValue=3;
+	
 	int col;
 	int row;
 	
@@ -33,7 +35,7 @@ public class Knight
 		this.color=color;
 		this.startingCol=col;
 		this.startingRow=row;
-		this.pieceType=Type.Knoght;
+		this.pieceType=Type.Knight;
 		this.icon=(color==Color.White ? WHITE_ICON : BLACK_ICON);
 		this.image=this.icon.getImage();
 		
@@ -57,6 +59,11 @@ public class Knight
 	public int getRow() 
 	{
 		return row;
+	}
+	
+	public int getPoints()
+	{
+		return pointValue;
 	}
 	
 	public String getStartingPosition()

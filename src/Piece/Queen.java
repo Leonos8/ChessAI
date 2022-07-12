@@ -22,6 +22,8 @@ public class Queen
 	int startingCol;
 	int startingRow;
 	
+	final int pointValue=9;
+	
 	int col;
 	int row;
 	
@@ -57,6 +59,11 @@ public class Queen
 	public int getRow() 
 	{
 		return row;
+	}
+	
+	public int getPoints()
+	{
+		return pointValue;
 	}
 	
 	public String getStartingPosition()
@@ -153,8 +160,8 @@ public class Queen
 				}
 			}
 		}
-		
-		if(Math.abs(curCol-newCol)==Math.abs(curRow)-newRow)
+
+		if(Math.abs(curCol-newCol)==Math.abs(curRow-newRow))
 		{
 			dif=Math.abs(curCol-newCol);
 			

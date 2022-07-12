@@ -39,9 +39,11 @@ public class AI extends Thread
 		}
 	}
 	
-	public Move findNextMove(Tile[][] tile, ArrayList<Piece> pob)
+	public void findNextMove(Tile[][] tile, ArrayList<Piece> pob)
 	{
-		//ArrayList<>
+		ArrayList<Move> aiMoves=new ArrayList<Move>();
+		boolean b=true;
+		
 		for(int i=0; i<pob.size(); i++)
 		{
 			if(pob.get(i).getColor().equals(Piece.Color.Black))
@@ -53,13 +55,66 @@ public class AI extends Thread
 						if(pob.get(i).isLegalMove(tile, pob.get(i).getCol(), pob.get(i).getRow(), col, row, 
 								Piece.Color.Black))
 						{
-							Move.movePiece(tile, pob.get(i).getCol(), pob.get(i).getRow(), col, row);	
+							aiMoves.add(new Move(pob.get(i), col, row));
+							
+							/*if(b)
+							{
+								//Move.movePiece(tile, pob.get(i).getCol(), pob.get(i).getRow(), col, row);
+								b=false;
+							}*/
 						}
 					}
 				}
 			}
 		}
 		
-		return null;//new Move();
+		ArrayList<Integer> index=new ArrayList<>();
+		int max=0;
+		
+		for(int i=0; i<aiMoves.size(); i++)
+		{
+			if(tile[aiMoves.get(i).getCol()][aiMoves.get(i).getRow()].getPiece().getPoints()>max)
+			{
+				max=aiMoves.get(i).getPiece().getPoints();
+			}
+		}
+		
+		for(int i=0; i<aiMoves.size(); i++)
+		{
+			if(tile[aiMoves.get(i).getCol()][aiMoves.get(i).getRow()].getPiece().getPoints()==max)
+			{
+				index.add(i);
+			}
+		}
+		
+		int rand=(int)(Math.random()*index.size());
+		
+		aiMoves.get(index.get(rand));
+		
+		if(tile[aiMoves.get(index.get(rand)).getCol()]
+				[aiMoves.get(index.get(rand)).getRow()].containsPiece())
+		{
+			board.capturePiece(tile, aiMoves.get(index.get(rand)).getPiece().getCol(), 
+					aiMoves.get(index.get(rand)).getPiece().getRow(), 
+					aiMoves.get(index.get(rand)).getCol(), aiMoves.get(index.get(rand)).getRow());
+		}
+		else if(!tile[aiMoves.get(index.get(rand)).getCol()]
+				[aiMoves.get(index.get(rand)).getRow()].containsPiece())
+		{
+			Move.movePiece(tile, aiMoves.get(index.get(rand)).getPiece().getCol(), 
+				aiMoves.get(index.get(rand)).getPiece().getRow(), 
+				aiMoves.get(index.get(rand)).getCol(), aiMoves.get(index.get(rand)).getRow());
+		}
+		
+		
+		
+		
+		for(int i=0; i<aiMoves.size(); i++)
+		{
+			System.out.println(aiMoves.get(i).getPiece().getPieceType());
+		}
+		
+		
+		//return null;//new Move();
 	}
 }

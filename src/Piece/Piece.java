@@ -25,7 +25,7 @@ public abstract class Piece
     		Empty,
 		    Pawn,
 			Rook,
-			Knoght,
+			Knight,
 			Bishop,
 			Queen,
 			King
@@ -69,6 +69,8 @@ public abstract class Piece
 		return pieceType.toString();
 	}
 	
+	public abstract int getPoints();
+	
 	public abstract boolean isLegalMove(Tile[][] tile ,
             int curCol,
             int curRow, 
@@ -91,6 +93,8 @@ public abstract class Piece
 	public abstract int getCol();
 	
 	public abstract int getRow();
+	
+	public abstract String getStartingPosition();
 	
 	public void setType(Type type)
 	{

@@ -254,30 +254,36 @@ public class Board implements MouseListener
 		
 		if(tile[curCol][curRow].getPiece().getColor().equals(Piece.Color.White))
 		{
-			if(tile[newCol][newRow].getPiece().getPiece() instanceof Bishop 
-					|| tile[newCol][newRow].getPiece().getPiece() instanceof Knight
-					|| tile[newCol][newRow].getPiece().getPiece() instanceof Queen)
+			if(tile[newCol][newRow].getPieceString().equals("BISHOP") 
+					|| tile[newCol][newRow].getPieceString().equals("KNIGHT")
+					|| tile[newCol][newRow].getPieceString().equals("QUEEN"))
 			{
-				capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].positionToString(newCol, 
-						newRow)+" "+capturedPieces.get(capturedPieces.size()-1)+"\t|");
+				capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].getPiece()
+						.getStartingPosition()+" "+capturedPieces.get(capturedPieces.size()-1)+"\t|");
 			}
 			else
 			{
-				capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].positionToString(newCol, 
-						newRow)+" "+capturedPieces.get(capturedPieces.size()-1)+"\t\t|");
+				capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].getPiece()
+						.getStartingPosition()+" "+capturedPieces.get(capturedPieces.size()-1)+"\t\t|");
 			}
 			
 		}
 		else if(tiles[curCol][curRow].getPiece().getColor().equals(Piece.Color.Black))
 		{
 			capturedPane.setText(capturedPane.getText()+"\t\t|"
-					+tiles[newCol][newRow].positionToString(newCol, newRow)
+					+tile[newCol][newRow].getPiece().getStartingPosition()
 					+" "+capturedPieces.get(capturedPieces.size()-1));
 			
 			
 		}
 		
 		capturedPane.setText(capturedPane.getText()+"\n");
+		
+		if(getNumOfPlayers()==1 && getTurn()%2==1)
+		{
+			System.out.println("RUN");
+			Board.ai.findNextMove(tiles, Board.getPiecesOnBoard());
+		}
 		
 		Move.movePiece(tile, curCol, curRow, newCol, newRow);
 	}
@@ -540,8 +546,11 @@ public class Board implements MouseListener
 					{
 						if(tiles[col][row].getPiece().getColor().equals(Piece.Color.Black))
 						{
-							selectedTile[0]=col;
-							selectedTile[1]=row;
+							if(getNumOfPlayers()==2)
+							{
+								selectedTile[0]=col;
+								selectedTile[1]=row;
+							}
 						}
 					}
 				}
@@ -553,7 +562,12 @@ public class Board implements MouseListener
 						tiles[selectedTile[0]][selectedTile[1]].getPiece().getColor()))
 				{
 					Move.movePiece(tiles, selectedTile[0], selectedTile[1], 
-							getCol(e.getX()), getRow(e.getY()));	
+							getCol(e.getX()), getRow(e.getY()));
+					
+					if(getNumOfPlayers()==1 && getTurn()%2==0)
+					{
+						Board.ai.findNextMove(tiles, Board.getPiecesOnBoard());
+					}
 				}
 				selectedTile[0]=-1;
 				selectedTile[1]=-1;

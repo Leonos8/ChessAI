@@ -29,6 +29,8 @@ public class Pawn
 	int startingCol;
 	int startingRow;
 	
+	final int pointValue=1;
+	
 	int col;
 	int row;
 	
@@ -69,6 +71,11 @@ public class Pawn
 	public int getRow() 
 	{
 		return row;
+	}
+	
+	public int getPoints()
+	{
+		return pointValue;
 	}
 	
 	public String getStartingPosition()
@@ -251,7 +258,7 @@ public class Pawn
 			bishopPromotionPanel.setBounds(Board.getStartingX()+(newCol*80)-40, 
 					Board.getStartingY()-50, 80, 50);
 		}
-		else if(tile[newCol][newRow].getPiece().getColor().equals("BLACK"))
+		else if(tile[newCol][newRow].getPiece().getColor().equals(Color.Black))
 		{
 			bishopPromotionPanel.setBounds(Board.getStartingX()+(newCol*80)-40, 
 					Board.getEndingY(), 80, 50);

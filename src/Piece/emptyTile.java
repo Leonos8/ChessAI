@@ -9,6 +9,8 @@ public class EmptyTile extends Piece
 	int startingCol;
 	int startingRow;
 	
+	final int pointValue=0;
+	
 	int col;
 	int row;
 	
@@ -47,6 +49,11 @@ public class EmptyTile extends Piece
 	{
 		return row;
 	}
+	
+	public int getPoints()
+	{
+		return pointValue;
+	}
 
 	@Override
 	public boolean isLegalMove(Tile[][] tile, int curCol, int curRow, int newCol, int newRow, Color color)
@@ -57,5 +64,10 @@ public class EmptyTile extends Piece
 	public String toString()
 	{
 		return "EMPTY";
+	}
+	
+	public String getStartingPosition()
+	{
+		return Tile.positionToString(startingCol, startingRow);
 	}
 }

@@ -20,8 +20,27 @@ public class Move
 		this.row=row;
 	}
 	
+	public int getCol()
+	{
+		return col;
+	}
+	
+	public int getRow()
+	{
+		return row;
+	}
+	
+	public Piece getPiece()
+	{
+		return piece;
+	}
+	
 	public static void movePiece(Tile[][] tile, int curCol, int curRow, int newCol, int newRow)
 	{
+		System.out.println(Board.getTurn());
+		//TODO figure out why game runs an infinite loop in some moves, and why when 
+		//AI can attack a piece, it moves two turns
+		
 		Piece piece=tile[curCol][curRow].getPiece();
 
 		if(!piece.getMoved())
@@ -61,10 +80,6 @@ public class Move
 		{
 			Stopwatch.resumeClock("p2");
 			Stopwatch.stopClock("p1");
-			if(Board.getNumOfPlayers()==1)
-			{
-				Board.ai.findNextMove(tile, Board.getPiecesOnBoard());
-			}
 		}
 		else if(Board.getTurn()%2==0)
 		{

@@ -22,6 +22,8 @@ public class Rook
 	int startingCol;
 	int startingRow;
 	
+	final int pointValue=5;
+	
 	int col;
 	int row;
 	
@@ -57,6 +59,11 @@ public class Rook
 	public int getRow() 
 	{
 		return row;
+	}
+	
+	public int getPoints()
+	{
+		return pointValue;
 	}
 	
 	public String getStartingPosition()
