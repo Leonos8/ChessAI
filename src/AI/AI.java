@@ -69,6 +69,7 @@ public class AI extends Thread
 		}
 		
 		ArrayList<Integer> index=new ArrayList<>();
+		int winningIndex=-1;
 		int max=0;
 		
 		for(int i=0; i<aiMoves.size(); i++)
@@ -76,6 +77,11 @@ public class AI extends Thread
 			if(tile[aiMoves.get(i).getCol()][aiMoves.get(i).getRow()].getPiece().getPoints()>max)
 			{
 				max=aiMoves.get(i).getPiece().getPoints();
+			}
+			
+			if(tile[aiMoves.get(i).getCol()][aiMoves.get(i).getRow()].getPiece().getPoints()==-1)
+			{
+				winningIndex=i;
 			}
 		}
 		
@@ -86,25 +92,36 @@ public class AI extends Thread
 				index.add(i);
 			}
 		}
-		
-		int rand=(int)(Math.random()*index.size());
-		
-		aiMoves.get(index.get(rand));
-		
-		if(tile[aiMoves.get(index.get(rand)).getCol()]
-				[aiMoves.get(index.get(rand)).getRow()].containsPiece())
+		if(winningIndex!=-1)
 		{
-			board.capturePiece(tile, aiMoves.get(index.get(rand)).getPiece().getCol(), 
+			Move.movePiece(tile, aiMoves.get(winningIndex).getPiece().getCol(), 
+				aiMoves.get(winningIndex).getPiece().getRow(), 
+				aiMoves.get(winningIndex).getCol(), aiMoves.get(winningIndex).getRow());
+			//TODO Change into captureKing
+		}
+		else
+		{
+			int rand=(int)(Math.random()*index.size());
+			
+			aiMoves.get(index.get(rand));
+			
+			if(tile[aiMoves.get(index.get(rand)).getCol()]
+					[aiMoves.get(index.get(rand)).getRow()].containsPiece())
+			{
+				board.capturePiece(tile, aiMoves.get(index.get(rand)).getPiece().getCol(), 
+						aiMoves.get(index.get(rand)).getPiece().getRow(), 
+						aiMoves.get(index.get(rand)).getCol(), aiMoves.get(index.get(rand)).getRow());
+			}
+			else if(!tile[aiMoves.get(index.get(rand)).getCol()]
+					[aiMoves.get(index.get(rand)).getRow()].containsPiece())
+			{
+				Move.movePiece(tile, aiMoves.get(index.get(rand)).getPiece().getCol(), 
 					aiMoves.get(index.get(rand)).getPiece().getRow(), 
 					aiMoves.get(index.get(rand)).getCol(), aiMoves.get(index.get(rand)).getRow());
+			}
 		}
-		else if(!tile[aiMoves.get(index.get(rand)).getCol()]
-				[aiMoves.get(index.get(rand)).getRow()].containsPiece())
-		{
-			Move.movePiece(tile, aiMoves.get(index.get(rand)).getPiece().getCol(), 
-				aiMoves.get(index.get(rand)).getPiece().getRow(), 
-				aiMoves.get(index.get(rand)).getCol(), aiMoves.get(index.get(rand)).getRow());
-		}
+		
+		
 		
 		
 		
