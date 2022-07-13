@@ -489,40 +489,6 @@ public class Board implements MouseListener
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static void updateMovePanel(String moveString)
 	{
 		moveStringList.add(moveString);
@@ -538,79 +504,6 @@ public class Board implements MouseListener
 		}
 	}
 	
-	
-	
-	
-	
-	
-	/*
-	 * tiles=tile;
-	 * 
-	 * capturedPieces.add(tiles[newCol][newRow].getPiece());
-	 * 
-	 * for(int i=0; i<piecesOnBoard.size(); i++) {
-	 * if(piecesOnBoard.get(i).getCol()==newCol &&
-	 * piecesOnBoard.get(i).getRow()==newRow) { piecesOnBoard.remove(i); } }
-	 * 
-	 * if(tile[curCol][curRow].getPiece().getColor().equals(Piece.Color.White)) {
-	 * if(tile[newCol][newRow].getPieceString().equals("BISHOP") ||
-	 * tile[newCol][newRow].getPieceString().equals("KNIGHT") ||
-	 * tile[newCol][newRow].getPieceString().equals("QUEEN")) {
-	 * capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].getPiece()
-	 * .getStartingPosition()+" "+capturedPieces.get(capturedPieces.size()-1)+"\t|")
-	 * ; } else {
-	 * capturedPane.setText(capturedPane.getText()+tile[newCol][newRow].getPiece()
-	 * .getStartingPosition()+" "+capturedPieces.get(capturedPieces.size()-1)+
-	 * "\t\t|"); }
-	 * 
-	 * } else
-	 * if(tiles[curCol][curRow].getPiece().getColor().equals(Piece.Color.Black)) {
-	 * capturedPane.setText(capturedPane.getText()+"\t\t|"
-	 * +tile[newCol][newRow].getPiece().getStartingPosition()
-	 * +" "+capturedPieces.get(capturedPieces.size()-1));
-	 * 
-	 * 
-	 * }
-	 * 
-	 * capturedPane.setText(capturedPane.getText()+"\n");
-	 * 
-	 * if(
-	 * getNumOfPlayers()==1 && getTurn()%2==1)
-	 * {
-	 *	 System.out.println("RUN");
-	 *	 Board.ai.findNextMove(tiles, Board.getPiecesOnBoard());//Creates an infinite recursion?
-	 * }
-	
-	 * Move.movePiece(tile, curCol, curRow, newCol, newRow);
-	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public static void updatePiecesOnBoard()
-	{
-		
-	}
-	
 	public static void updateTime(String player, String time)
 	{
 		if(player.equals("p1"))
@@ -623,8 +516,6 @@ public class Board implements MouseListener
 		}
 	}
 	
-	
-
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
